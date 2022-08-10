@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Pages/HomePage.dart';
-import 'package:phoenix/Pages/LoginPage.dart';
+import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
 import 'package:phoenix/Validator/RegisterValidator.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _RegisterPageState extends State<RegisterPage> {
   var personNumCont = TextEditingController();
   var nameCont = TextEditingController();
   var surnameCont = TextEditingController();
+  var phoneNumCont = TextEditingController();
   var passCont = TextEditingController();
   var dateCont = TextEditingController();
   bool isAgree = false;
@@ -27,6 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
         body: Center(
             child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -46,6 +49,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       right: pageWidth / 15),
                   child: TextFormField(
                     controller: personNumCont,
+                    keyboardType: TextInputType.number,
+                    textCapitalization: TextCapitalization.words,
+                    textInputAction: TextInputAction.next,
                     decoration: borderStyle("T.C Kimlik No"),
                     validator: (value) {
                       return checkPersonelNum(value);
@@ -59,6 +65,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       right: pageWidth / 15),
                   child: TextFormField(
                     controller: nameCont,
+                    keyboardType: TextInputType.name,
+                    textCapitalization: TextCapitalization.words,
+                    textInputAction: TextInputAction.next,
                     decoration: borderStyle("İsim"),
                     validator: (value) {
                       return cheackName(value);
@@ -72,6 +81,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       right: pageWidth / 15),
                   child: TextFormField(
                     controller: surnameCont,
+                    keyboardType: TextInputType.name,
+                    textCapitalization: TextCapitalization.words,
+                    textInputAction: TextInputAction.next,
                     decoration: borderStyle("Soyisim"),
                     validator: (value) {
                       return cheackName(value);
@@ -84,9 +96,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       left: pageWidth / 15,
                       right: pageWidth / 15),
                   child: TextFormField(
-                    obscureText: true,
-                    controller: passCont,
-                    decoration: borderStyle("Parola"),
+                    keyboardType: TextInputType.phone,
+                    textCapitalization: TextCapitalization.words,
+                    textInputAction: TextInputAction.next,
+                    controller: phoneNumCont,
+                    decoration: borderStyle("Phone number"),
                     validator: (value) {
                       return cheackPass(value.toString());
                     },
@@ -98,23 +112,18 @@ class _RegisterPageState extends State<RegisterPage> {
                       left: pageWidth / 15,
                       right: pageWidth / 15),
                   child: TextFormField(
-                    controller: dateCont,
-                    decoration: borderStyle("Doğum tarihi"),
-                    onTap: () {
-                      showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime(2150))
-                          .then((takingTime) {
-                        setState(() {
-                          dateCont.text =
-                              "${takingTime.day} / ${takingTime.month} / ${takingTime.year}";
-                        });
-                      });
+                    obscureText: true,
+                    controller: passCont,
+                    keyboardType: TextInputType.text,
+                    textCapitalization: TextCapitalization.words,
+                    textInputAction: TextInputAction.next,
+                    decoration: borderStyle("Parola"),
+                    validator: (value) {
+                      return cheackPass(value.toString());
                     },
                   ),
                 ),
+
                 Row(
                   children: [
                     Padding(
@@ -168,7 +177,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                       name: nameCont.text,
                                       surName: surnameCont.text,
                                       personelNum: personNumCont.text,
-                                      password: passCont.text);
+                                      phoneNum:phoneNumCont.text ,
+                                      password: passCont.text
+                                  );
                                   checkPersonExits(person)
                                       .then((value) {
                                         if(value){
@@ -229,3 +240,27 @@ snackbar(BuildContext context, message, {duration = 600}) {
     duration: Duration(milliseconds: duration),
   ));
 }
+/*
+Padding(
+padding: EdgeInsets.only(
+bottom: pageHeight / 40,
+left: pageWidth / 15,
+right: pageWidth / 15),
+child: TextFormField(
+controller: dateCont,
+decoration: borderStyle("Doğum tarihi"),
+onTap: () {
+showDatePicker(
+context: context,
+initialDate: DateTime.now(),
+firstDate: DateTime(1900),
+lastDate: DateTime(2150))
+    .then((takingTime) {
+setState(() {
+dateCont.text =
+"${takingTime.day} / ${takingTime.month} / ${takingTime.year}";
+});
+});
+},
+),
+*/

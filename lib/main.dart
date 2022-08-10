@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Person.dart';
-import 'package:phoenix/Pages/LoginPage.dart';
+import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
 
 
 void main() {
@@ -10,6 +10,9 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +37,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Future<void> getPerson()async{
-    var db = await PersonDao().getAll();
-    for(Person s in db){
-      print(s.name);
+
+  Future<void> getAll()async{
+    List<Person> users = await PersonDao().getAll();
+
+    for(Person p in users){
+      print(p.name);
     }
   }
-
-  @override
+@override
   void initState() {
-    getPerson();
-    super.initState();
+    getAll();
   }
   @override
   Widget build(BuildContext context) {

@@ -14,10 +14,7 @@ class _GridViewPageState extends State<GridViewPage> {
   Future<void> getProduct() async {
     List<Product> products =await ProductDao().getAll();
 
-    for(Product p in products){
-      print(p.id);
-
-    }
+    return products;
   }
 
 
@@ -42,7 +39,7 @@ class _GridViewPageState extends State<GridViewPage> {
                     child: MyCard(product: _products[item], pagewidth: pageWidth),
                     onTap: (){
                       setState(() {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UrunPage(_products[item])));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UrunPage( _products[item])));
                       });
                     }
                     );

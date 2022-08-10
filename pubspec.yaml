@@ -67,7 +67,7 @@ flutter:
        - Images/anka.png
        - Images/deneme.jpg
        - Images/deneme1.png
-       - DataBase/Anka.db
+       - DataBase/ProjectAnka.db
 
 
 

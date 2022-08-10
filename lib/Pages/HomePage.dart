@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Pages/GridViewPage.dart';
 import 'package:phoenix/Pages/ProfilePage.dart';
-import 'package:phoenix/Pages/SettingPage.dart';
 import 'package:phoenix/Pages/campaignPage.dart';
 
 class HomePage extends StatefulWidget{

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/Entity/Person.dart';
-import 'package:phoenix/Pages/LoginPage.dart';
-import 'package:phoenix/Pages/campaignPage.dart';
+import 'package:phoenix/Pages/HomePage.dart';
+import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
 import 'package:phoenix/Validator/RegisterValidator.dart';
 
 class ProfilePage extends StatefulWidget {
-  Person person;
+  Person _person;
 
 
-  ProfilePage(this.person);
+  ProfilePage(this._person);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -16,16 +16,20 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool changeEmailAndPhone = false;
-  String email="sada@sdasd.com";
+  Person loginPersson;
+  @override
+  void initState() {
+    loginPersson =widget._person;
+  }
 
-  var mailCont=TextEditingController();
-  var phoneCont=TextEditingController();
+  var personelNum=TextEditingController();
+  var phone=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    String phone=widget.person.personelNum;
+
+    String personelNum=widget._person.personelNum;
     var pageScreen = MediaQuery.of(context).size;
-    var pageHeight = pageScreen.height;
     var pageWidth = pageScreen.width;
     return ListView(children: [
       Container(
@@ -48,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 13),
-                        child: Text(widget.person.name,
+                        child: Text(loginPersson.name,
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       ),
@@ -71,31 +75,31 @@ class _ProfilePageState extends State<ProfilePage> {
               ))),
       TextFormField(
        enabled: changeEmailAndPhone,
-       decoration:InputDecoration(icon: Icon(Icons.email),hintText:email),
+       decoration:InputDecoration(icon: Icon(Icons.email),hintText:loginPersson.personelNum),
         onChanged: (value){
          if(cheackEmail(value)){
            print(cheackEmail(value));
-           email=value;
+           personelNum=value;
          }
         },
      ),
       TextField(
         enabled: changeEmailAndPhone,
-        decoration:InputDecoration(icon: Icon(Icons.phone),hintText:phone
+        decoration:InputDecoration(icon: Icon(Icons.phone),hintText:loginPersson.phoneNum
         ),
       ),
       ListTile(title: Text("canli destek"),leading: Icon(Icons.support_agent), trailing: Icon(Icons.arrow_right),
-    onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>campaignPage()), (route) => false);},),
+    onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(widget._person)), (route) => false);},),
       ListTile(title: Text("Adreslerim"),leading: Icon(Icons.location_city), trailing: Icon(Icons.arrow_right),
-        onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>campaignPage()), (route) => false);},),
+        onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(widget._person)), (route) => false);},),
       ListTile(title: Text("Favorilerim"),leading: Icon(Icons.favorite), trailing: Icon(Icons.arrow_right),
-        onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>campaignPage()), (route) => false);},),
+        onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(widget._person)), (route) => false);},),
       ListTile(title: Text("Geçmis Siparislerim"),leading: Icon(Icons.shopping_basket), trailing: Icon(Icons.arrow_right),
-        onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>campaignPage()), (route) => false);},),
+        onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(widget._person)), (route) => false);},),
       ListTile(title: Text("Giris Ayarlari"),leading: Icon(Icons.key), trailing: Icon(Icons.arrow_right),
-        onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>campaignPage()), (route) => false);},),
+        onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(widget._person)), (route) => false);},),
       ListTile(title: Text("Yardım"),leading: Icon(Icons.help), trailing: Icon(Icons.arrow_right),
-        onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>campaignPage()), (route) => false);},),
+        onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(widget._person)), (route) => false);},),
       ListTile(title: Text("Çıkıs Yap"),leading: Icon(Icons.exit_to_app), trailing: Icon(Icons.arrow_right),
         onTap: (){Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false);},),
 

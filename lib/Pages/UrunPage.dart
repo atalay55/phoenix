@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Entity/Product.dart';
-import 'package:phoenix/Pages/GridViewPage.dart';
 import 'package:phoenix/Pages/HomePage.dart';
 
 class UrunPage extends StatefulWidget {
 
-
   Product product;
   UrunPage(this.product);
-
-
-
-
 
   @override
   State<UrunPage> createState() => _UrunPageState();
