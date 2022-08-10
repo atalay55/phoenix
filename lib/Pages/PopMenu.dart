@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class PopMenu extends StatelessWidget {
-  late  List<String> poplist ;
+   List<String> poplist ;
 
-  PopMenu( {required this.poplist});
+  PopMenu( {this.poplist});
 
 
   @override

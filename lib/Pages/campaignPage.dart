@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 class campaignPage extends StatefulWidget {
-  const campaignPage({Key? key}) : super(key: key);
 
   @override
   State<campaignPage> createState() => _campaignPageState();

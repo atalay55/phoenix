@@ -1,20 +1,32 @@
+import 'package:phoenix/Entity/Mesage.dart';
 
 cheackPass(var  pass){
-
+  Message msg=Message();
   if(pass.isEmpty){
-    return "Password field cannot be empty";
+    msg.message="Password field cannot be empty";
+    msg.isCorrect=false;
+      return msg.message;
   }
   if(!(pass=="123")){
-    return "Wrong Password";}
+    msg.message="Wrong Password";
+    msg.isCorrect=false;
+    return msg.message;
+     }
+  msg.isCorrect=true;
   return null;
 }
-
-cheackTc(var personelNum) {
+ cheackTc(var personelNum) {
+  Message msg=Message();
   if (personelNum.isEmpty) {
-    return "Personle Number field cannot be empty";
+    msg.message="Personle Number field cannot be empty";
+    msg.isCorrect=false;
+    return msg.message;
   }
   if (personelNum != "aa") {
-    return "Tc kimlik numarasi bulunamadi";
+    msg.message="Tc kimlik numarasi bulunamadi";
+    msg.isCorrect=false;
+    return msg.message;
   }
-  return null;
+    msg.isCorrect=true;
+    return null;
 }

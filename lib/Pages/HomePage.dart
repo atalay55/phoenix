@@ -1,12 +1,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Pages/GridViewPage.dart';
 import 'package:phoenix/Pages/ProfilePage.dart';
 import 'package:phoenix/Pages/SettingPage.dart';
 import 'package:phoenix/Pages/campaignPage.dart';
 
 class HomePage extends StatefulWidget{
+  Person person;
+  HomePage(this.person);
+  HomePage.empty();
 
   @override
   State<HomePage> createState() => _MainPageState();
@@ -22,7 +26,7 @@ class _MainPageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var page = MediaQuery.of(context).size;
     var pageWidth=page.width;
-    List<Widget> pageList=[GridViewPage(),ProfilePage(),campaignPage(),];
+    List<Widget> pageList=[GridViewPage(),ProfilePage(widget.person),campaignPage(),];
     return Scaffold(
         appBar:showSearchBar? AppBar(
         title: isSearch ? TextField(

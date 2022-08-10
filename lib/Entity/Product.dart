@@ -1,8 +1,8 @@
 class Product{
-  late int id;
-  late String productName;
-  late double price;
-  late String imagePath;
+  int id;
+  String productName;
+  double price;
+  String imagePath;
 
-  Product({required this.id,required this.productName,required this.price,required this.imagePath});
+  Product({this.id,this.productName,this.price,this.imagePath});
 }

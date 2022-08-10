@@ -3,9 +3,9 @@ import 'package:phoenix/Entity/Product.dart';
 
 class MyCard extends StatelessWidget {
   var pagewidth;
-  late Product? product;
+  Product product;
 
-  MyCard({required this.product ,required this.pagewidth});
+  MyCard({ this.product , this.pagewidth});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class MyCard extends StatelessWidget {
     return myCard(product: product,pagewidth:pagewidth );
   }
 }
-myCard({Product? product,pagewidth} ){
+myCard({Product product,pagewidth} ){
   return SizedBox(
     width: pagewidth/3,
     height: pagewidth/3,
@@ -25,7 +25,7 @@ myCard({Product? product,pagewidth} ){
           SizedBox(
               height: pagewidth/8,
               width: pagewidth/8 ,
-              child: Image.asset(product!.imagePath)),
+              child: Image.asset(product.imagePath)),
           Padding(
             padding:  EdgeInsets.only(top: 10),
             child: Text(product.productName),

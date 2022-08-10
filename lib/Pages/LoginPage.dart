@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:phoenix/DbService/PersonDao.dart';
+import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Pages/HomePage.dart';
 import 'package:phoenix/Pages/RegisterPage.dart';
 import 'package:phoenix/Validator/LoginValidator.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var personelNumCont = TextEditingController();
-  var passCont = TextEditingController();
-  var formKey = GlobalKey<FormState>();
-  var rememberMe =false;
+  Person _person;
+
+  Future<void> getAll()async{
+    List<Person> users = await PersonDao().getAll();
+
+    for(Person p in users){
+      if(p.personelNum==_personelNumCont.text&& p.password==_passCont.text){
+        _person=p;
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(_person)), (route) => false);
+      }
+    }
+  }
+
+  var _rememberMe=false;
+  var _personelNumCont = TextEditingController();
+  var _passCont = TextEditingController();
+  var _formKey = GlobalKey<FormState>();
 
 
     @override
     Widget build(BuildContext context) {
+
 
       var page = MediaQuery.of(context).size;
       var pageHeight=page.height;
@@ -36,14 +50,14 @@ class _LoginPageState extends State<LoginPage> {
 
                     child: Image.asset("Images/anka.png")),
                 Form(
-                    key: formKey,
+                    key: _formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
                           padding:  EdgeInsets.only(bottom: pageHeight/40,left: pageWidth/10 ,right: pageWidth/10) ,
                           child: TextFormField(
-                            controller: personelNumCont,
+                            controller: _personelNumCont,
                             decoration:  InputDecoration(
                               errorBorder:OutlineInputBorder(borderSide:BorderSide(width: 2,color:Colors.red),borderRadius: BorderRadius.circular(8.0)),
                               focusedErrorBorder: OutlineInputBorder(borderSide:BorderSide(width: 2,color:Colors.red),borderRadius: BorderRadius.circular(8.0)),
@@ -64,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding:  EdgeInsets.only(bottom: pageHeight/30,left: pageWidth/10 ,right: pageWidth/10) ,
                           child: TextFormField(
                             obscureText: true,
-                            controller: passCont,
+                            controller: _passCont,
                             decoration: InputDecoration(
                               errorBorder:OutlineInputBorder(borderSide:BorderSide(width: 2,color:Colors.red),borderRadius: BorderRadius.circular(8.0)),
                               focusedErrorBorder: OutlineInputBorder(borderSide:BorderSide(width: 2,color:Colors.red),borderRadius: BorderRadius.circular(8.0)),
@@ -86,9 +100,9 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               Text("Beni hatırla"),
                               Switch(
-                                value: rememberMe,onChanged: (value){
+                                value: _rememberMe,onChanged: (value){
                                 setState(() {
-                                  rememberMe=value;
+                                  _rememberMe=value;
                                 });},
                                 activeColor: Colors.green,
                                 activeTrackColor: Colors.greenAccent,
@@ -108,12 +122,12 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),backgroundColor: Colors.green),
                                 child:Text("login"),
                                 onPressed: (){
-                                  var isCorrect=formKey.currentState!.validate();
+                                  var isCorrect=_formKey.currentState.validate();
                                   setState(() {
                                     if(isCorrect){
-                                      snackbar(context, "Giris Basarılı",duration: 1);
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);
+                                     getAll();
                                     }
+
                                   });
                                 }
 
@@ -154,7 +168,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: ElevatedButton(
                               style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),backgroundColor: Colors.red,side: BorderSide(width: 4,color: Colors.red)), onPressed: (){
                             setState(() {
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(_person)), (route) => false);
                             });
                           }, child: Text("e-Devlet ile Giris",style: TextStyle(color:Colors.white),)),
                         ),

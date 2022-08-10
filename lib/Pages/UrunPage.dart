@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Entity/Product.dart';
 import 'package:phoenix/Pages/GridViewPage.dart';
 import 'package:phoenix/Pages/HomePage.dart';
 
 class UrunPage extends StatefulWidget {
-  Product product;
 
-  UrunPage({required this.product});
+
+  Product product;
+  UrunPage(this.product);
+
+
+
+
 
   @override
   State<UrunPage> createState() => _UrunPageState();
@@ -48,7 +54,7 @@ class _UrunPageState extends State<UrunPage> {
                         height:pageWidth/10  ,
                         child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage.empty()), (route) => false);
                             },
                             child: Text("Cancel")),
                       ),
