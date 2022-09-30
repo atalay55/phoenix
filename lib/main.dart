@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Person> users = await PersonDao().getAll();
 
     for(Person p in users){
-      print(p.name);
+      print(p.personelNum);
     }
   }
 @override

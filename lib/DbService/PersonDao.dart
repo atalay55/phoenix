@@ -28,7 +28,6 @@ Future<void> deletePerson(int id) async{
   var db =await VeritabaniYardimci.veriTabaniErisim();
   db.delete("person",where: "id=$id");
 }
-
   Future<void> updatePerson(int id , String password) async{
 
     var db =await VeritabaniYardimci.veriTabaniErisim();

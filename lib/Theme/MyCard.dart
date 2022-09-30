@@ -18,21 +18,20 @@ myCard({Product product,pagewidth} ){
     width: pagewidth/3,
     height: pagewidth/3,
     child: Card(
-      color: Colors.white38,
+      color: Colors.blueGrey,
       child:Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-              height: pagewidth/8,
-              width: pagewidth/8 ,
-              child: Image.asset(product.imagePath)),
+
+          Container( height: pagewidth/2.1,child: Image.asset(product.imagePath)),
           Padding(
             padding:  EdgeInsets.only(top: 10),
-            child: Text(product.productName),
+            child: Text(product.productName,style: TextStyle(color: Colors.white,fontSize: 25),),
           ),
           Padding(
             padding:  EdgeInsets.only(top: 10),
-            child: Text(" ${product.price.toString()}: TL "),
+            child: Text(" ${product.price.toString()} TL ",style: TextStyle(color: Colors.white70,fontSize: 16)),
           ),
         ],
       ),

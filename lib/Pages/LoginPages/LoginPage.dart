@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Person.dart';
@@ -6,6 +8,7 @@ import 'package:phoenix/Pages/LoginPages/ForgetPassPage.dart';
 import 'package:phoenix/Pages/LoginPages/RegisterPage.dart';
 import 'package:phoenix/Validator/LoginValidator.dart';
 
+
 class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -13,8 +16,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   Person _person;
-
-
 
   Future<Person> getPerson()async{
     List<Person> users = await PersonDao().getAll();
@@ -27,11 +28,6 @@ class _LoginPageState extends State<LoginPage> {
       }return null;
     }
   }
-
-
-
-
-
   var _rememberMe = false;
   var _personelNumCont = TextEditingController();
   var _passCont = TextEditingController();
@@ -88,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                             fillColor: Colors.white,
                           ),
                           validator: (value) {
-                            return cheackTc(context,value);
+                            return loginValidator().cheackTc(value);
                           },
                         ),
                       ),
@@ -124,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                             fillColor: Colors.white,
                           ),
                           validator: (value) {
-                            return cheackPass(context,value);
+                            return loginValidator().cheackPass(value);
                           },
                         ),
                       ),
@@ -174,7 +170,6 @@ class _LoginPageState extends State<LoginPage> {
 
                                    getPerson().then((value) {
                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(value)), (route) => false);
-
                                    });
                                     }
                                   });

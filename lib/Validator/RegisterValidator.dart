@@ -1,9 +1,6 @@
 import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Mesage.dart';
 import 'package:phoenix/Entity/Person.dart';
-
-
-
 Future<bool> checkPersonExits(Person person) async {
     List<Person> persons = await PersonDao().getAll();
     for (Person p in persons) {
@@ -13,7 +10,6 @@ Future<bool> checkPersonExits(Person person) async {
     }
     return true;
   }
-
 cheackPass(String pass) {
   Message msg=Message();
   if (pass.isEmpty) {
@@ -24,7 +20,6 @@ cheackPass(String pass) {
   msg.isCorrect=true;
   return null;
 }
-
 cheackName(var name) {
   Message msg=Message();
   if (name.isEmpty) {
@@ -40,7 +35,6 @@ cheackName(var name) {
   msg.isCorrect=true;
   return null;
 }
-
 cheackEmail(var email) {
   Message msg=Message();
   if (email.isEmpty) {
@@ -56,7 +50,6 @@ cheackEmail(var email) {
   msg.isCorrect=true;
   return null;
 }
-
 checkPersonelNum(var perNum) {
   Message msg=Message();
   if (perNum.isEmpty) {

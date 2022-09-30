@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
 
 class PopMenu extends StatelessWidget {
    List<String> poplist ;
@@ -28,7 +28,7 @@ exitAlert(context) {
                 child: Text("No")),
             TextButton(
                 onPressed: () {
-                  SystemNavigator.pop();
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (contex)=>LoginPage()), (route) => false);
                 },
                 child: Text("yes")),
           ],
@@ -46,7 +46,7 @@ popMenuAppBar(context,poplist) {
                     child: Text(element), value: poplist.indexOf(element)))
             .toList(),
     onSelected: (selectedValue) {
-      if (selectedValue == 1) {
+      if (selectedValue == 0) {
         exitAlert(context);
       }
     },

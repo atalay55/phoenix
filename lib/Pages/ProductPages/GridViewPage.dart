@@ -1,30 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/DbService/ProductDao.dart';
 import 'package:phoenix/Entity/Product.dart';
-import 'package:phoenix/Pages/UrunPage.dart';
+import 'package:phoenix/Pages/ProductPages/UrunPage.dart';
 import 'package:phoenix/Theme/MyCard.dart';
 
 class GridViewPage extends StatefulWidget {
+
+  bool  isSearch;
+  String name;
+
+
+  GridViewPage(this.isSearch,this.name);
 
   @override
   State<GridViewPage> createState() => _GridViewPageState();
 }
 
 class _GridViewPageState extends State<GridViewPage> {
-  Future<void> getProduct() async {
+  Future<void> getAllProduct() async {
     List<Product> products =await ProductDao().getAll();
 
     return products;
   }
+  Future<void> getProduct(name) async {
+    List<Product> products =await ProductDao().getProductWithName(name);
 
+    return products;
+  }
 
   @override
   Widget build(BuildContext context) {
     var page = MediaQuery.of(context).size;
     var pageWidth = page.width;
     return Scaffold(
-        body: FutureBuilder<dynamic>(
-      future: getProduct(),
+        body:  FutureBuilder<dynamic>(
+      future: widget.isSearch ? getProduct(widget.name):getAllProduct() ,
       builder: (context, snapchat) {
         if (snapchat.hasData) {
           var _products = snapchat.data;

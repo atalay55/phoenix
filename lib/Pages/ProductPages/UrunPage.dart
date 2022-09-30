@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/Entity/Product.dart';
-import 'package:phoenix/Pages/HomePage.dart';
+import 'package:phoenix/Pages/CartPage.dart';
+
 
 class UrunPage extends StatefulWidget {
 
   Product product;
   UrunPage(this.product);
+  UrunPage.empty();
 
   @override
   State<UrunPage> createState() => _UrunPageState();
@@ -18,6 +20,7 @@ class _UrunPageState extends State<UrunPage> {
     var pageWidth = page.width;
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.pinkAccent,
           title: const Text("Urün Page"),
         ),
         body: Center(
@@ -28,38 +31,30 @@ class _UrunPageState extends State<UrunPage> {
                   width: pageWidth / 2.5,
                   child: Image.asset(widget.product.imagePath)),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding:  EdgeInsets.only(top: pageWidth/20),
                 child: Text(widget.product.productName,style: TextStyle(fontSize: 25,color: Colors.red),),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.only(top: pageWidth/26),
                 child: Text(widget.product.price.toString() + "  TL ",style: TextStyle(fontSize: 20),),
               ),
               Padding(
-                padding:  EdgeInsets.only(top:pageWidth/6),
+                padding:  EdgeInsets.only(top:pageWidth/8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding:  EdgeInsets.only(right: 25),
-                      child: SizedBox(
-                        width: pageWidth/4.5,
-                        height:pageWidth/10  ,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage.empty()), (route) => false);
-                            },
-                            child: Text("Cancel")),
-                      ),
-                    ),
+
                     SizedBox(
-                      width:pageWidth/4.5  ,
+                      width:pageWidth/1.5  ,
                       height:pageWidth/10  ,
                       child: ElevatedButton(
                           onPressed: () {
-                            print("satın alındı");
+                            setState(() {
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> CardPage(widget.product.id)));
+                            });
+
                           },
-                          child: Text("Buy")),
+                          child: Text("Sepete Ekle ")),
                     ),
                   ],
                 ),
