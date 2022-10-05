@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Person.dart';
@@ -17,6 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   Person _person;
 
+
   Future<Person> getPerson()async{
     List<Person> users = await PersonDao().getAll();
 
@@ -24,10 +23,13 @@ class _LoginPageState extends State<LoginPage> {
       if(p.personelNum==_personelNumCont.text&& p.password==_passCont.text){
         _person=p;
         return _person;
-
-      }return null;
+      }
+      return null;
     }
   }
+
+
+
   var _rememberMe = false;
   var _personelNumCont = TextEditingController();
   var _passCont = TextEditingController();
@@ -84,8 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                             fillColor: Colors.white,
                           ),
                           validator: (value) {
-                            return loginValidator().cheackTc(value);
-                          },
+
+                           return loginValidator().cheackTc(value);
+                          }
                         ),
                       ),
                       Padding(
@@ -120,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                             fillColor: Colors.white,
                           ),
                           validator: (value) {
+
                             return loginValidator().cheackPass(value);
                           },
                         ),
@@ -136,6 +140,8 @@ class _LoginPageState extends State<LoginPage> {
                               value: _rememberMe,
                               onChanged: (value) {
                                 setState(() {
+                                  print(value);
+
                                   _rememberMe = value;
                                 });
                               },
@@ -163,15 +169,19 @@ class _LoginPageState extends State<LoginPage> {
                                     backgroundColor: Colors.green),
                                 child: Text("login"),
                                 onPressed: () {
-                                  var isCorrect =
-                                      _formKey.currentState.validate();
+                                  bool isTrue=_formKey.currentState.validate();
                                   setState(() {
-                                    if (isCorrect) {
+                                    loginValidator().findPerson(_personelNumCont.text,_passCont.text).then((value) {
+                                     if(value.isCorrect){
+                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(_person)), (route) => false);
+                                     }if(isTrue){
+                                        return loginValidator().msg.message.toString();
+                                     }else{
+                                       print(value.message);
+                                       snackbar(context, value.message);
+                                     }
+                                    });
 
-                                   getPerson().then((value) {
-                                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(value)), (route) => false);
-                                   });
-                                    }
                                   });
                                 }),
                           ))
@@ -249,6 +259,7 @@ class _LoginPageState extends State<LoginPage> {
                   GestureDetector(
                     child: Text("Parolamı unuttum"),
                     onTap: () {
+
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPassPage()));
 
                     },

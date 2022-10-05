@@ -1,92 +1,78 @@
 import 'dart:async';
-
-
 import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Mesage.dart';
 import 'package:phoenix/Entity/Person.dart';
 
 class loginValidator{
-  var currentpersonelNum;
-  var pass;
+  Message msg=Message();
+
   Person person;
   Future<List<Person>>isPersonNumExits()async{
     List<Person> users = await PersonDao().getAll();
     return users;
   }
 
-  cheackTc(personelNum){
-    Message msg=Message();
-    msg.isCorrect=false;
+  Future<Message> findPerson(String personelNum,String pass)async{
+    msg.isCorrect=true;
 
-    if (personelNum.isEmpty) {
-      msg.message="Personle Number field cannot be empty";
-      return msg.message;
-    }
-
-      isPersonNumExits().then((value)async{
-        await Future.forEach(value, (element) {
-          person= element;
-          if(person.personelNum == personelNum.toString()){
-           currentpersonelNum= person.personelNum;
-           print(currentpersonelNum);
-            return currentpersonelNum;
-          }
-
-
-        });
-     /*
-       for (Person p in value) {
-         if(p.personelNum==personelNum){
-            print(p.personelNum==personelNum);
-            currentpersonelNum=  p.personelNum;
-            print(currentpersonelNum);
-        }
-          }*/
-        }
-      );
-    if(currentpersonelNum==null){
-      print(currentpersonelNum);
-      return "Wrong user";
-    }else{
-      return null;
-    }
-
-
-
-
-  }
-  cheackPass( pass){
-    Message msg=Message();
-
-    if(pass.isEmpty){
-      msg.message="Password field cannot be empty";
-      msg.isCorrect=false;
-      return msg.message;
-    }
-    isPersonNumExits().then((value) {
-      for (Person p in value) {
-        if(p.personelNum!=pass){
-          msg.message= null;
-        }if(p.personelNum==pass){
-          msg.message="true";
-        }
+    List<Person> persons=[];
+    await isPersonNumExits().then((value)async {
+      for(Person p in value){
+         persons.add(p);
       }
-    }
-    );
+    });
+    for(Person p in persons){
+      if(p.personelNum!=personelNum){
+        msg.message="Wrong User";
+        msg.isCorrect= false;
+        return msg;
 
-    if(msg.message==null){
-      msg.message="Wrong password ";
-      msg.isCorrect=false;
+      }
+      else if(p.password!= pass){
+        msg.message= " wrong password";
+        msg.isCorrect= false;
+        return msg;
+
+      }
+      return msg;
+    }
+
+  }
+
+
+cheackTc(String personelNum){
+    if (personelNum.isEmpty) {
+     msg.message= "Personle Number field cannot be empty";
+     msg.isCorrect= false;
+     return msg.message;
+    }
+    if(personelNum.length<6){
+      msg.message= "personel number long must be 6 ";
+      msg.isCorrect= false;
       return msg.message;
-    }if(msg.message=="true"){
-      return null;
+    }
+    return  null;
     }
 
 
-  }
+cheackPass( pass){
+    if(pass.isEmpty){
+      msg.message=  "Password field cannot be empty";
+      msg.isCorrect= false;
+      return msg.message;
+
+    }
+    if(pass.toString().length<3){
+      msg.message=  "Password length must longer than 3 ";
+      msg.isCorrect= false;
+      return msg.message;
+
+    }
+    return null;
+
   }
 
-
+}
 
 
 

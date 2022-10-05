@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     for(Person p in users){
       print(p.personelNum);
+      print(p.password);
     }
   }
 @override

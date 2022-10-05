@@ -1,13 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Pages/HomePage.dart';
 import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
+
 import 'package:phoenix/Validator/RegisterValidator.dart';
 
 class RegisterPage extends StatefulWidget {
-  @override
+
+
+
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
@@ -18,9 +22,15 @@ class _RegisterPageState extends State<RegisterPage> {
   var surnameCont = TextEditingController();
   var phoneNumCont = TextEditingController();
   var passCont = TextEditingController();
+  bool isAgree =false;
   var dateCont = TextEditingController();
-  bool isAgree = false;
 
+
+  @override
+  void initState() {
+
+    print(isAgree);
+  }
   @override
   Widget build(BuildContext context) {
     var pageScreen = MediaQuery.of(context).size;
@@ -42,6 +52,48 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:EdgeInsets.only(
+                          bottom: pageHeight / 40,
+                          left: pageWidth / 15,
+                          right: pageWidth / 13),
+                      child: SizedBox(
+                          width: pageWidth/2.6,
+                          child:TextFormField(
+                            controller: nameCont,
+                            keyboardType: TextInputType.name,
+                            textCapitalization: TextCapitalization.words,
+                            textInputAction: TextInputAction.next,
+                            decoration: borderStyle("İsim"),
+                            validator: (value) {
+                              return cheackName(value);
+                            },
+                          )),
+                    ),
+                    Padding(
+                      padding:EdgeInsets.only(
+                          bottom: pageHeight / 40,
+                      ),
+                      child: SizedBox(
+                          width: pageWidth/2.6,
+                          child:TextFormField(
+                            controller: surnameCont,
+                            keyboardType: TextInputType.name,
+                            textCapitalization: TextCapitalization.words,
+                            textInputAction: TextInputAction.next,
+                            decoration: borderStyle("Soyisim"),
+                            validator: (value) {
+                              return cheackName(value);
+                            },
+                          ),),
+                    ),
+
+                  ],
+                ),
+
                 Padding(
                   padding: EdgeInsets.only(
                       bottom: pageHeight / 40,
@@ -58,38 +110,45 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                 ),
+
                 Padding(
                   padding: EdgeInsets.only(
                       bottom: pageHeight / 40,
                       left: pageWidth / 15,
                       right: pageWidth / 15),
                   child: TextFormField(
-                    controller: nameCont,
-                    keyboardType: TextInputType.name,
+                    controller: dateCont,
+                    keyboardType: TextInputType.datetime,
                     textCapitalization: TextCapitalization.words,
                     textInputAction: TextInputAction.next,
-                    decoration: borderStyle("İsim"),
+
+                    decoration: InputDecoration(
+                      border:OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                         borderSide: BorderSide(color: Colors.grey, width: 1.5),
+                      ),
+
+                      suffixIcon: GestureDetector(child: Icon(Icons.date_range),
+                       onTap: (){
+                        showDatePicker(context: context, initialDate: DateTime.now() , firstDate: DateTime(2017), lastDate: DateTime(2080)).
+                        then((value){ setState(() {
+                          String date = "${value.day} : ${value.month} : ${value.year}";
+                            dateCont.text=date;
+                        }); }) ;
+
+                       },
+                      ),
+                      label: Text("Date of birth",style: TextStyle(color: Colors.black54)),
+                         ),
+                    onTap: (){
+
+                    },
                     validator: (value) {
-                      return cheackName(value);
+
                     },
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: pageHeight / 40,
-                      left: pageWidth / 15,
-                      right: pageWidth / 15),
-                  child: TextFormField(
-                    controller: surnameCont,
-                    keyboardType: TextInputType.name,
-                    textCapitalization: TextCapitalization.words,
-                    textInputAction: TextInputAction.next,
-                    decoration: borderStyle("Soyisim"),
-                    validator: (value) {
-                      return cheackName(value);
-                    },
-                  ),
-                ),
+
                 Padding(
                   padding: EdgeInsets.only(
                       bottom: pageHeight / 40,
@@ -132,13 +191,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           value: isAgree,
                           onChanged: (value) {
                             setState(() {
+                              print(value);
                               isAgree = value;
                             });
                           }),
                     ),
-                    Text(
-                      "Uye Gizlilik Politakası",
-                      style: TextStyle(color: Colors.green),
+                    GestureDetector(
+                      onTap: (){
+                        gizlilikAlert(context,isAgree);
+
+                      },
+                      child: Text(
+                        "Uye Gizlilik Politakası",
+                        style: TextStyle(color: Colors.green),
+                      ),
                     ),
                   ],
                 ),
@@ -157,7 +223,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => LoginPage()),
-                                    (route) => false,
+                                        (route) => false,
                                   );
                                 });
                               },
@@ -182,19 +248,23 @@ class _RegisterPageState extends State<RegisterPage> {
                                   );
                                   checkPersonExits(person)
                                       .then((value) {
-                                        if(value){
+                                        if(isAgree){
+                                           if(value){
                                           PersonDao().addPerson(person);
                                           snackbar(context, "Kayit Basarili");
                                           Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => HomePage(person)),
-                                                  (route) => false);
-                                        }else{
-                                          snackbar(context, "kullanici mevcut");
-                                        }
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => HomePage(person)),
+                                              (route) => false);
+                                    }else{
+                                      snackbar(context, "kullanici mevcut");
+                                    }
 
-                                  });
+                                  }else{
+                                    snackbar(context, "please check üye gizlilik politikası");
+                                  }}
+                                  );
                                 } else {
                                   print("not valid format");
                                 }
@@ -206,10 +276,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
               ],
-            ),
-          )
-        ]))));
+            ),)
+          ]))));
   }
+
 }
 
 borderStyle(name) {
@@ -240,27 +310,30 @@ snackbar(BuildContext context, message, {duration = 600}) {
     duration: Duration(milliseconds: duration),
   ));
 }
-/*
-Padding(
-padding: EdgeInsets.only(
-bottom: pageHeight / 40,
-left: pageWidth / 15,
-right: pageWidth / 15),
-child: TextFormField(
-controller: dateCont,
-decoration: borderStyle("Doğum tarihi"),
-onTap: () {
-showDatePicker(
-context: context,
-initialDate: DateTime.now(),
-firstDate: DateTime(1900),
-lastDate: DateTime(2150))
-    .then((takingTime) {
-setState(() {
-dateCont.text =
-"${takingTime.day} / ${takingTime.month} / ${takingTime.year}";
-});
-});
-},
-),
-*/
+
+gizlilikAlert(context,isAgree) {
+  showDialog(
+      context: context,
+      builder: (BuildContext contex) {
+        return AlertDialog(
+          title: Text("Gizlilik Sözlesmesi"),
+          content: Text(" Quisque id sodales tellus. Curabitur bibendum enim a diam viverra vehicula. "
+              "Fusce sagittis, arcu a consectetur faucibus, metus nisi faucibus lacus, a euismod tortor risus quis est."
+              " Aenean vitae volutpat mauris. Duis nec elementum sem. Phasellus malesuada, justo ut hendrerit dictum, velit est ultrices est"
+              ", nec dignissim augue nisi et justo. Phasellus placerat purus venenatis odio posuere, eget convallis ligula finibus."
+              " Nulla at libero et quam sagittis aliquet dignissim nec nisi. Sed quis suscipit tellus, eu tincidunt orci."),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Simdi degil")),
+            TextButton(
+                onPressed: () {
+                    Navigator.pop(context);
+                },
+                child: Text("Kabul et")),
+          ],
+        );
+      });
+}

@@ -32,6 +32,7 @@ cheackName(var name) {
     msg.isCorrect=false;
     return msg.message;
   }
+
   msg.isCorrect=true;
   return null;
 }
