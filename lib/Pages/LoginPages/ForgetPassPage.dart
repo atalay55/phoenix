@@ -17,7 +17,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
     List<Person> users = await PersonDao().getAll();
 
     for(Person p in users){
-      if(p.personelNum==personelNumcont.text){
+      if(p.userName==_userNameCont.text){
         _person=p;
         return _person;
 
@@ -26,8 +26,8 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
   }
 
   var _formKey = GlobalKey<FormState>();
-  var personelNumcont = TextEditingController();
-  var passCont = TextEditingController();
+  var _userNameCont = TextEditingController();
+  var _passCont = TextEditingController();
 
 
   @override
@@ -56,7 +56,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                             left: pageWidth / 10,
                             right: pageWidth / 10),
                         child: TextFormField(
-                          controller: personelNumcont,
+                          controller:_userNameCont,
                           decoration: InputDecoration(
                             errorBorder: OutlineInputBorder(
                                 borderSide:
@@ -81,7 +81,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                             fillColor: Colors.white,
                           ),
                           validator: (value) {
-                            return cheackPass(value);
+                            return RegisterValidator().checkPass(value);
                           },
                         ),
                       ),
@@ -92,7 +92,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                             right: pageWidth / 10),
                         child: TextFormField(
                           obscureText: true,
-                          controller: passCont,
+                          controller: _passCont,
                           decoration: InputDecoration(
                             errorBorder: OutlineInputBorder(
                                 borderSide:
@@ -117,7 +117,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                             fillColor: Colors.white,
                           ),
                           validator: (value) {
-                            return cheackPass(value);
+                            return RegisterValidator().checkPass(value);
                           },
                         ),
                       ),
@@ -147,7 +147,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                                         if(value==null){
                                           print("kullanici bulunamadi");
                                         }else{
-                                          PersonDao().updatePerson(value.id, passCont.text);
+                                          PersonDao().updatePersonPass(value.id, _passCont.text);
                                           print("basariyla gerçeklestirldi");
                                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false);
 

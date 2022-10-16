@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/DbService/ProductDao.dart';
 import 'package:phoenix/Entity/Product.dart';
-import 'package:phoenix/Pages/ProductPages/UrunPage.dart';
 import 'package:phoenix/Theme/MyCard.dart';
 
 class GridViewPage extends StatefulWidget {
@@ -22,6 +21,7 @@ class _GridViewPageState extends State<GridViewPage> {
 
     return products;
   }
+
   Future<void> getProduct(name) async {
     List<Product> products =await ProductDao().getProductWithName(name);
 
@@ -47,11 +47,7 @@ class _GridViewPageState extends State<GridViewPage> {
               itemBuilder: (context, item) {
                 return GestureDetector(
                     child: MyCard(product: _products[item], pagewidth: pageWidth),
-                    onTap: (){
-                      setState(() {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UrunPage( _products[item])));
-                      });
-                    }
+
                     );
 
               });

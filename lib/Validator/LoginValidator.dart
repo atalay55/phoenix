@@ -12,27 +12,25 @@ class loginValidator{
     return users;
   }
 
-  Future<Message> findPerson(String personelNum,String pass)async{
+  Future<Message> findPerson(String userName,String pass)async{
     msg.isCorrect=true;
-
     List<Person> persons=[];
     await isPersonNumExits().then((value)async {
+
       for(Person p in value){
          persons.add(p);
       }
     });
     for(Person p in persons){
-      if(p.personelNum!=personelNum){
+      if(p.userName!=userName){
         msg.message="Wrong User";
         msg.isCorrect= false;
         return msg;
-
       }
       else if(p.password!= pass){
         msg.message= " wrong password";
         msg.isCorrect= false;
         return msg;
-
       }
       return msg;
     }
@@ -40,36 +38,47 @@ class loginValidator{
   }
 
 
-cheackTc(String personelNum){
-    if (personelNum.isEmpty) {
-     msg.message= "Personle Number field cannot be empty";
-     msg.isCorrect= false;
-     return msg.message;
-    }
-    if(personelNum.length<6){
-      msg.message= "personel number long must be 6 ";
-      msg.isCorrect= false;
+  checkUserName(String userName) {
+    Message msg = Message();
+    if (userName.isEmpty) {
+      msg.message = "kullanıcı adı boş geçilemez";
+      msg.isCorrect = false;
       return msg.message;
     }
-    return  null;
-    }
-
-
-cheackPass( pass){
-    if(pass.isEmpty){
-      msg.message=  "Password field cannot be empty";
-      msg.isCorrect= false;
+    if (userName.length < 3) {
+      msg.message = "kullanıcı adı 3 kelimeden fazla olmalıdır";
+      msg.isCorrect = false;
       return msg.message;
-
     }
-    if(pass.toString().length<3){
-      msg.message=  "Password length must longer than 3 ";
-      msg.isCorrect= false;
+    if (userName.startsWith(RegExp(r"[0123456789]"))) {
+      msg.message = "kullanıcı adı sayı ile başlayamaz";
+      msg.isCorrect = false;
       return msg.message;
-
     }
+    msg.isCorrect = true;
     return null;
+  }
 
+  checkPass(String pass) {
+    Message msg = Message();
+    if (pass.isEmpty) {
+      msg.message = "sifre alani bos gecilemez";
+      msg.isCorrect = false;
+      return msg.message;
+    }
+    if(!pass.contains(RegExp(r"[0123456]"))){
+      msg.message = "sifrenizde rakam bulanması gerekir";
+      msg.isCorrect = false;
+      return msg.message;
+    }
+
+    if(!pass.contains(RegExp(r"[a-zA-Z]"))){
+      msg.message = "sifrenizde harf bulanması gerekir";
+      msg.isCorrect = false;
+      return msg.message;
+    }
+    msg.isCorrect = true;
+    return null;
   }
 
 }

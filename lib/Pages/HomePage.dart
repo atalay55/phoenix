@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/Entity/Person.dart';
-import 'package:phoenix/Pages/CartPage.dart';
+import 'package:phoenix/Pages/CardPage.dart';
 import 'package:phoenix/Pages/ProductPages/GridViewPage.dart';
 import 'package:phoenix/Pages/ProductPages/ProductAddPage.dart';
 import 'package:phoenix/Pages/ProfilePage.dart';
@@ -26,6 +26,7 @@ class _MainPageState extends State<HomePage> {
   var title = "Anka";
   var poplist=["exit"];
 
+
   @override
   Widget build(BuildContext context) {
     var page = MediaQuery.of(context).size;
@@ -35,7 +36,7 @@ class _MainPageState extends State<HomePage> {
       ProfilePage(widget._person),
       campaignPage(),
       ProductAddPage(),
-      CardPage(1)
+      CardPage.empty()
     ];
     return Scaffold(
       appBar:showSearchBar
@@ -82,6 +83,9 @@ class _MainPageState extends State<HomePage> {
                             });
                           },
                           icon:const  Icon(Icons.search)),
+                    IconButton(onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CardPage(widget._person.id.toString())));
+                      }, icon: Icon(Icons.shopping_bag)),
                 ])
           : AppBar(
              backgroundColor: Colors.purpleAccent,

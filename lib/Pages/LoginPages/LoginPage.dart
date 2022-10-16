@@ -15,23 +15,25 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   Person _person;
 
-
   Future<Person> getPerson()async{
     List<Person> users = await PersonDao().getAll();
 
     for(Person p in users){
-      if(p.personelNum==_personelNumCont.text&& p.password==_passCont.text){
+      if(p.userName==_userNameCont .text&& p.password==_passCont.text){
         _person=p;
         return _person;
       }
       return null;
     }
   }
-
-
+  @override
+  void initState() {
+    getPerson();
+    super.initState();
+  }
 
   var _rememberMe = false;
-  var _personelNumCont = TextEditingController();
+  var _userNameCont = TextEditingController();
   var _passCont = TextEditingController();
   var _formKey = GlobalKey<FormState>();
 
@@ -61,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                             left: pageWidth / 10,
                             right: pageWidth / 10),
                         child: TextFormField(
-                          controller: _personelNumCont,
+                          controller: _userNameCont ,
                           decoration: InputDecoration(
                             errorBorder: OutlineInputBorder(
                                 borderSide:
@@ -87,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (value) {
 
-                           return loginValidator().cheackTc(value);
+                           return loginValidator().checkUserName(value);
                           }
                         ),
                       ),
@@ -124,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (value) {
 
-                            return loginValidator().cheackPass(value);
+                            return loginValidator().checkPass(value);
                           },
                         ),
                       ),
@@ -171,9 +173,13 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () {
                                   bool isTrue=_formKey.currentState.validate();
                                   setState(() {
-                                    loginValidator().findPerson(_personelNumCont.text,_passCont.text).then((value) {
+                                    loginValidator().findPerson(_userNameCont .text,_passCont.text).then((value) {
                                      if(value.isCorrect){
-                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(_person)), (route) => false);
+                                       getPerson().then((value) {
+                                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(value)), (route) => false);
+                                       });
+
+
                                      }if(isTrue){
                                         return loginValidator().msg.message.toString();
                                      }else{
@@ -239,7 +245,7 @@ class _LoginPageState extends State<LoginPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            HomePage(Person(personelNum: "000000",name: "fatih",password: "123564",phoneNum: "54961320215",surName: "atalay"))),
+                                            HomePage(Person(userName: "000000",name: "fatih",password: "123456",phoneNum: "54961320215",surName: "atalay",userImage: "Images/indir.png"))),
                                     (route) => false);
                               });
                             },

@@ -1,5 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:phoenix/Entity/Product.dart';
+import 'package:phoenix/Pages/CardPage.dart';
+
+import 'package:phoenix/Theme/SnopZoom.dart';
+
 
 class MyCard extends StatelessWidget {
   var pagewidth;
@@ -7,13 +12,13 @@ class MyCard extends StatelessWidget {
 
   MyCard({ this.product , this.pagewidth});
 
+
   @override
   Widget build(BuildContext context) {
-
-    return myCard(product: product,pagewidth:pagewidth );
+    return myCard(product: product,pagewidth:pagewidth,context: context );
   }
 }
-myCard({Product product,pagewidth} ){
+myCard({Product product,pagewidth,context} ){
   return SizedBox(
     width: pagewidth/3,
     height: pagewidth/3,
@@ -24,15 +29,37 @@ myCard({Product product,pagewidth} ){
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
 
-          Container( height: pagewidth/2.1,child: Image.asset(product.imagePath)),
-          Padding(
-            padding:  EdgeInsets.only(top: 10),
+
+          Container( height: pagewidth/3,
+              child:Padding(
+                padding: const EdgeInsets.only(top: 15,left: 10,right: 10),
+                child:  GestureDetector(
+
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: CachedNetworkImage(imageUrl:product.imagePath ,width:pagewidth/2, fit: BoxFit.cover,
+                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        errorWidget: (context,url,error)=>Container(color: Colors.black26,child: Icon(Icons.error_outline),),
+                    ),
+                  ),onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SnopZoom(product.imagePath)));
+                },
+                ),)
+              )//Image.asset(product.imagePath)),
+          , Padding(
+            padding:  EdgeInsets.only(top: 20),
             child: Text(product.productName,style: TextStyle(color: Colors.white,fontSize: 25),),
           ),
           Padding(
             padding:  EdgeInsets.only(top: 10),
             child: Text(" ${product.price.toString()} TL ",style: TextStyle(color: Colors.white70,fontSize: 16)),
           ),
+          Padding(
+            padding: const EdgeInsets.only( top:10.0),
+            child: ElevatedButton(onPressed: (){
+
+            }, child: Text("Sepete Ekle")),
+          )
         ],
       ),
     ),

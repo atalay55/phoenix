@@ -1,10 +1,11 @@
+
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class VeritabaniYardimci{
-  static final String veritabaniAdi="ProjectAnka.db";
+  static const  String veritabaniAdi="AnkaDatabase.db";
   static Future<Database> veriTabaniErisim() async{
     String dataPath = join(await getDatabasesPath(),veritabaniAdi);
     if (!await databaseExists(dataPath)){

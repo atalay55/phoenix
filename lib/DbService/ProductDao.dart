@@ -6,7 +6,7 @@ class ProductDao{
     List<Map<String,dynamic>> maps=await db.rawQuery("select * from product");
     return List.generate(maps.length, (index) {
       var satir=maps[index];
-      return Product(id: satir["id"],productName: satir["productName"],pieces: satir["pieces"],imagePath: satir["imagePath"],price: satir["price"]);
+      return Product(id: satir["id"],productName: satir["productName"],pieces: satir["piece"],imagePath: satir["productImage"],price: satir["price"]);
     });
   }
 
@@ -15,7 +15,7 @@ class ProductDao{
     List<Map<String,dynamic>> maps=await db.rawQuery("SELECT * FROM product WHERE productName like '%${name}%'");
     return List.generate(maps.length, (index) {
       var satir=maps[index];
-      return Product(id: satir["id"],productName: satir["productName"],pieces: satir["pieces"],imagePath: satir["imagePath"],price: satir["price"]);
+      return Product(id: satir["id"],productName: satir["productName"],pieces: satir["piece"],imagePath: satir["productImage"],price: satir["price"]);
     });
   }
   Future<List<Product>> getProductWithId( id) async{
@@ -23,7 +23,7 @@ class ProductDao{
     List<Map<String,dynamic>> maps=await db.rawQuery("SELECT * FROM product WHERE id=${id}");
       return List.generate(maps.length, (index) {
         var satir=maps[index];
-        return Product(id: satir["id"],productName: satir["productName"],pieces: satir["pieces"],imagePath: satir["imagePath"],price: satir["price"]);
+        return Product(id: satir["id"],productName: satir["productName"],pieces: satir["piece"],imagePath: satir["productImage"],price: satir["price"]);
       });
 
   }
@@ -32,8 +32,8 @@ class ProductDao{
     var productDb=Map<String,dynamic>();
     productDb["productName"]=product.productName;
     productDb["price"]=product.price;
-    productDb["pieces"]=product.pieces;
-    productDb["imagePath"]=product.imagePath;
+    productDb["piece"]=product.pieces;
+    productDb["productImage"]=product.imagePath;
     db.insert("product", productDb);
   }
   Future<void> deleteProduct(int id) async{

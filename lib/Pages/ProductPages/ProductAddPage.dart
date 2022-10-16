@@ -64,7 +64,8 @@ class _ProductAddPageState extends State<ProductAddPage> {
                             ),
                             fillColor: Colors.white,
                           ),
-                          validator:(value){ return productValidator(value);},
+                          validator:(value){ return ProductValidator().checkProductName(value);},
+
 
                         ),
                       ),
@@ -99,7 +100,7 @@ class _ProductAddPageState extends State<ProductAddPage> {
                             ),
                             fillColor: Colors.white,
                           ),
-                          validator:(value){ return productValidator(value);},
+                          validator:(value){ return ProductValidator().checkPrductPrice(value);},
                         ),
                       ),
                       Padding(
@@ -133,7 +134,7 @@ class _ProductAddPageState extends State<ProductAddPage> {
                             ),
                             fillColor: Colors.white,
                           ),
-                          validator:(value){ return productValidator(value);},
+                          validator:(value){ return ProductValidator().checkPrductPiece(value);},
                         ),
                       ),
                       Padding(
@@ -165,7 +166,7 @@ class _ProductAddPageState extends State<ProductAddPage> {
                               style: TextStyle(fontSize: 15.0),
                             ),
                             fillColor: Colors.white,
-                          ),validator:(value){ return productValidator(value);},
+                          ),validator:(value){ return ProductValidator().checkPrductImage(value);},
                         ),
                       ),
                       Padding(

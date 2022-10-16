@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:phoenix/Entity/Product.dart';
-import 'package:phoenix/Pages/CartPage.dart';
+import 'package:phoenix/Pages/CardPage.dart';
+import 'package:phoenix/Theme/SnopZoom.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
 
 
 class UrunPage extends StatefulWidget {
@@ -29,7 +32,17 @@ class _UrunPageState extends State<UrunPage> {
             children: [
               SizedBox(
                   width: pageWidth / 2.5,
-                  child: Image.asset(widget.product.imagePath)),
+                  height: pageWidth/2.5,
+                  child: PinchZoom(
+                    image:InteractiveViewer(clipBehavior: Clip.none,child:
+                    AspectRatio(aspectRatio: 1,child: ClipRRect(borderRadius: BorderRadius.circular(20),
+                      child:  CachedNetworkImage(imageUrl:widget.product.imagePath ,width:pageWidth/2,height: pageWidth/2, fit: BoxFit.cover,
+                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        errorWidget: (context,url,error)=>Container(color: Colors.black26,child: Icon(Icons.error_outline),),),)),)
+
+
+                    ,resetDuration: const Duration(milliseconds: 100),
+                  )), // Image.asset(widget.product.imagePath)),
               Padding(
                 padding:  EdgeInsets.only(top: pageWidth/20),
                 child: Text(widget.product.productName,style: TextStyle(fontSize: 25,color: Colors.red),),
@@ -50,7 +63,7 @@ class _UrunPageState extends State<UrunPage> {
                       child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> CardPage(widget.product.id)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>SnopZoom(widget.product.imagePath),));
                             });
 
                           },

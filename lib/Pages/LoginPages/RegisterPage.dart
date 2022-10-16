@@ -16,20 +16,20 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  var formKey = GlobalKey<FormState>();
-  var personNumCont = TextEditingController();
-  var nameCont = TextEditingController();
-  var surnameCont = TextEditingController();
-  var phoneNumCont = TextEditingController();
-  var passCont = TextEditingController();
-  bool isAgree =false;
-  var dateCont = TextEditingController();
+  var _formKey = GlobalKey<FormState>();
+  var _userNameCont = TextEditingController();
+  var _nameCont = TextEditingController();
+  var _surnameCont = TextEditingController();
+  var _phoneNumCont = TextEditingController();
+  var _passCont = TextEditingController();
+  bool _isAgree =false;
+  var _dateCont = TextEditingController();
 
 
   @override
   void initState() {
 
-    print(isAgree);
+    print(_isAgree);
   }
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
               height: pageWidth / 2.5,
               child: Image.asset("Images/register.png")),
           Form(
-            key: formKey,
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -63,13 +63,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: SizedBox(
                           width: pageWidth/2.6,
                           child:TextFormField(
-                            controller: nameCont,
+                            controller: _nameCont,
                             keyboardType: TextInputType.name,
                             textCapitalization: TextCapitalization.words,
                             textInputAction: TextInputAction.next,
                             decoration: borderStyle("İsim"),
                             validator: (value) {
-                              return cheackName(value);
+                              return RegisterValidator().checkName(value);
                             },
                           )),
                     ),
@@ -80,13 +80,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: SizedBox(
                           width: pageWidth/2.6,
                           child:TextFormField(
-                            controller: surnameCont,
+                            controller: _surnameCont,
                             keyboardType: TextInputType.name,
                             textCapitalization: TextCapitalization.words,
                             textInputAction: TextInputAction.next,
                             decoration: borderStyle("Soyisim"),
                             validator: (value) {
-                              return cheackName(value);
+                              return RegisterValidator().checksurName(value);
                             },
                           ),),
                     ),
@@ -100,13 +100,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       left: pageWidth / 15,
                       right: pageWidth / 15),
                   child: TextFormField(
-                    controller: personNumCont,
+                    controller: _userNameCont,
                     keyboardType: TextInputType.number,
                     textCapitalization: TextCapitalization.words,
                     textInputAction: TextInputAction.next,
-                    decoration: borderStyle("T.C Kimlik No"),
+                    decoration: borderStyle("UserName"),
                     validator: (value) {
-                      return checkPersonelNum(value);
+                      return RegisterValidator().checkUserName(value);
                     },
                   ),
                 ),
@@ -117,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       left: pageWidth / 15,
                       right: pageWidth / 15),
                   child: TextFormField(
-                    controller: dateCont,
+                    controller: _dateCont,
                     keyboardType: TextInputType.datetime,
                     textCapitalization: TextCapitalization.words,
                     textInputAction: TextInputAction.next,
@@ -133,17 +133,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         showDatePicker(context: context, initialDate: DateTime.now() , firstDate: DateTime(2017), lastDate: DateTime(2080)).
                         then((value){ setState(() {
                           String date = "${value.day} : ${value.month} : ${value.year}";
-                            dateCont.text=date;
+                            _dateCont.text=date;
                         }); }) ;
 
                        },
                       ),
                       label: Text("Date of birth",style: TextStyle(color: Colors.black54)),
                          ),
-                    onTap: (){
-
-                    },
                     validator: (value) {
+                     return RegisterValidator().checkDate(value);
 
                     },
                   ),
@@ -158,10 +156,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     keyboardType: TextInputType.phone,
                     textCapitalization: TextCapitalization.words,
                     textInputAction: TextInputAction.next,
-                    controller: phoneNumCont,
+                    controller: _phoneNumCont,
                     decoration: borderStyle("Phone number"),
                     validator: (value) {
-                      return cheackPass(value.toString());
+                      return RegisterValidator().checkPhoneNumber(value.toString());
                     },
                   ),
                 ),
@@ -172,13 +170,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       right: pageWidth / 15),
                   child: TextFormField(
                     obscureText: true,
-                    controller: passCont,
+                    controller: _passCont,
                     keyboardType: TextInputType.text,
                     textCapitalization: TextCapitalization.words,
                     textInputAction: TextInputAction.next,
                     decoration: borderStyle("Parola"),
                     validator: (value) {
-                      return cheackPass(value.toString());
+                      return RegisterValidator().checkPass(value.toString());
                     },
                   ),
                 ),
@@ -188,17 +186,17 @@ class _RegisterPageState extends State<RegisterPage> {
                     Padding(
                       padding: EdgeInsets.only(left: pageWidth / 15),
                       child: Checkbox(
-                          value: isAgree,
+                          value: _isAgree,
                           onChanged: (value) {
                             setState(() {
                               print(value);
-                              isAgree = value;
+                              _isAgree = value;
                             });
                           }),
                     ),
                     GestureDetector(
                       onTap: (){
-                        gizlilikAlert(context,isAgree);
+                        gizlilikAlert(context,_isAgree);
 
                       },
                       child: Text(
@@ -236,19 +234,19 @@ class _RegisterPageState extends State<RegisterPage> {
                         width: 85,
                         child: ElevatedButton(
                             onPressed: () {
-                              var isCorrect = formKey.currentState.validate();
+                              var isCorrect = _formKey.currentState.validate();
                               setState(() {
                                 if (isCorrect) {
                                   var person = Person(
-                                      name: nameCont.text,
-                                      surName: surnameCont.text,
-                                      personelNum: personNumCont.text,
-                                      phoneNum:phoneNumCont.text ,
-                                      password: passCont.text
+                                      name: _nameCont.text,
+                                      surName: _surnameCont.text,
+                                      userName: _userNameCont.text,
+                                      phoneNum:_phoneNumCont.text ,
+                                      password: _passCont.text,
                                   );
-                                  checkPersonExits(person)
+                                  RegisterValidator().checkPersonExits(person)
                                       .then((value) {
-                                        if(isAgree){
+                                        if(_isAgree){
                                            if(value){
                                           PersonDao().addPerson(person);
                                           snackbar(context, "Kayit Basarili");

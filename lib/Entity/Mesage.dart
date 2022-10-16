@@ -1,4 +1,5 @@
-class  Message{
+
+class Message{
     String _message;
     bool _isCorrect;
 
