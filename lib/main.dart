@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
-import 'package:phoenix/DbService/ProductDao.dart';
-import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
-
-import 'Entity/Product.dart';
 
 
 void main() {
@@ -41,12 +37,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-
-
-
   Future<void> getAll()async{
-    PersonDao().getAll().then((value) {print(value.first.userName + value.first.password);});
-   
   }
 @override
   void initState() {

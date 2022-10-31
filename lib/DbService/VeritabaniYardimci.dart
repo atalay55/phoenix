@@ -5,7 +5,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class VeritabaniYardimci{
-  static const  String veritabaniAdi="AnkaDatabase.db";
+  static const  String veritabaniAdi="AnkaDb.db";
   static Future<Database> veriTabaniErisim() async{
     String dataPath = join(await getDatabasesPath(),veritabaniAdi);
     if (!await databaseExists(dataPath)){

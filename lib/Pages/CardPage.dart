@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
@@ -19,44 +21,52 @@ class CardPage extends StatefulWidget {
 
 class _CardPageState extends State<CardPage> {
 
-
-
   List<Product> products;
-  List<int> pro;
+  List<int> pro=[];
   List<Product>_productss=[];
   Product _product;
 
-  Future<void> addPrdocutToCard(id) async {
-    products = await ProductDao().getProductWithId(int.parse(id));
-    return products;
-  }
-
-
-
-  Future<List<Product>> convertproductList(personId) async {
+  Future<void> convertproductList(personId) async {
       List<int> pr= await parseProductList(personId);
+      _productss.clear();
+
       for(int i in pr){
         products= await ProductDao().getProductWithId(i);
        _product=products.first;
        _productss.add(_product);
+        print(products.first.id);
+
       }
       return _productss;
 
   }
+  Future<void> deleteProduct(int productId){
+    pro.remove(productId);
+    String str=pro.map((e) => e.toString()).join(",");
+    if(str.isEmpty){
+      str =null;
+    }
+    PersonDao().deleteProductToProductList(widget.personId,str);
+
+  }
 
   Future<List<int>> parseProductList(id) async {
+    String as;
+    pro.clear();
     var pr = await PersonDao().getProducts(id);
-    String as= pr.first;
+    as= pr.first;
     var bs = as.split(",");
-    pro = bs.map(int.parse).toList();
-
+    for(var i in bs){
+      if(i.contains("[")){
+        i=i[1];
+        pro.add(int.parse(i));
+      }  pro.add(int.parse(i));
+    }
+    print(pro);
     return pro;
   }
 
-  @override
-  void initState() {
-    _productss.clear();
-  }
+
 
     @override
     Widget build(BuildContext context) {
@@ -65,7 +75,7 @@ class _CardPageState extends State<CardPage> {
             future: convertproductList(int.parse(widget.personId)),
             builder: (context, snapchat) {
               if (snapchat.hasData) {
-                List<Product> _products = snapchat.data;
+               var _products = snapchat.data;
                 return ListView.builder(
                     itemCount: _products.length,
                     itemBuilder: (BuildContext context, int item) {
@@ -78,8 +88,15 @@ class _CardPageState extends State<CardPage> {
                           ),
                           //Image.asset(_products[item].imagePath),
                           title: Text(_products[item].productName),
-                          trailing: Text(_products[item].price.toString()),
-                          subtitle: Text(_products[item].pieces.toString()),
+                          trailing: GestureDetector(onTap:(){
+                            setState(() {
+                              deleteProduct(_products[item].id);
+                            });
+
+
+                            },child: Icon(Icons.cancel)),
+                          subtitle: Text("${_products[item].price.toString()} "),
+
 
                         ),
                       );

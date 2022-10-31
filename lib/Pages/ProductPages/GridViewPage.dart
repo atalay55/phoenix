@@ -3,13 +3,16 @@ import 'package:phoenix/DbService/ProductDao.dart';
 import 'package:phoenix/Entity/Product.dart';
 import 'package:phoenix/Theme/MyCard.dart';
 
+import '../../Entity/Person.dart';
+
 class GridViewPage extends StatefulWidget {
 
   bool  isSearch;
   String name;
+  Person _person;
 
 
-  GridViewPage(this.isSearch,this.name);
+  GridViewPage(this.isSearch,this.name,this._person);
 
   @override
   State<GridViewPage> createState() => _GridViewPageState();
@@ -46,7 +49,7 @@ class _GridViewPageState extends State<GridViewPage> {
                   ),
               itemBuilder: (context, item) {
                 return GestureDetector(
-                    child: MyCard(product: _products[item], pagewidth: pageWidth),
+                    child: MyCard(product: _products[item], pagewidth: pageWidth, person: widget._person),
 
                     );
 

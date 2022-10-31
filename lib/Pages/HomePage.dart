@@ -32,7 +32,7 @@ class _MainPageState extends State<HomePage> {
     var page = MediaQuery.of(context).size;
     var pageWidth = page.width;
     List<Widget> pageList = [
-      GridViewPage(isSearch, search),
+      GridViewPage(isSearch, search,widget._person),
       ProfilePage(widget._person),
       campaignPage(),
       ProductAddPage(),
@@ -189,45 +189,7 @@ class _MainPageState extends State<HomePage> {
 
           ],
         ),
-      ), /*
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex:item  ,
-        backgroundColor: Colors.white38,
-        items: [
-          BottomNavigationBarItem(
-            label: "",
-            icon: Icon(Icons.home),
-          ),
-          BottomNavigationBarItem(
-            label: "",
-            icon: Icon(Icons.person),
-
-          ),
-          BottomNavigationBarItem(
-            label: "",
-            icon: Icon(Icons.campaign),
-          ),
-        ],
-        onTap: (value){
-          setState(() {
-            if(value==0){
-              showSearchBar=true;
-              title="Anka";
-            }
-            if(value==1){
-              showSearchBar=false;
-              title="Profile";
-            }
-            if(value==2){
-              showSearchBar=false;
-              title="Campain";
-            }
-            item=value;
-          });
-
-        },
-
-      )*/
+      ),
     );
   }
 }

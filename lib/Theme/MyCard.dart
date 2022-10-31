@@ -1,24 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Product.dart';
-import 'package:phoenix/Pages/CardPage.dart';
-
 import 'package:phoenix/Theme/SnopZoom.dart';
+import '../Entity/Person.dart';
 
 
 class MyCard extends StatelessWidget {
   var pagewidth;
   Product product;
+  Person person;
 
-  MyCard({ this.product , this.pagewidth});
+  MyCard({ this.product , this.pagewidth,this.person});
 
 
   @override
   Widget build(BuildContext context) {
-    return myCard(product: product,pagewidth:pagewidth,context: context );
+    return myCard(product: product,pagewidth:pagewidth,context: context,person:person );
   }
 }
-myCard({Product product,pagewidth,context} ){
+myCard({Product product,pagewidth,context,Person person} ){
   return SizedBox(
     width: pagewidth/3,
     height: pagewidth/3,
@@ -57,7 +58,8 @@ myCard({Product product,pagewidth,context} ){
           Padding(
             padding: const EdgeInsets.only( top:10.0),
             child: ElevatedButton(onPressed: (){
-
+              //PersonDao().deleteAllProductToProductList(person.id);
+              PersonDao().addProductToProductList(person.id,product.id.toString());
             }, child: Text("Sepete Ekle")),
           )
         ],

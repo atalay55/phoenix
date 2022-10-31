@@ -3,41 +3,32 @@ import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Mesage.dart';
 import 'package:phoenix/Entity/Person.dart';
 
-class loginValidator{
+class LoginValidator{
   Message msg=Message();
-
+  List<Person> users=[];
   Person person;
+
+
   Future<List<Person>>isPersonNumExits()async{
-    List<Person> users = await PersonDao().getAll();
+    users = await PersonDao().getAll();
     return users;
   }
 
-  Future<Message> findPerson(String userName,String pass)async{
-    msg.isCorrect=true;
-    List<Person> persons=[];
-    await isPersonNumExits().then((value)async {
+  Future<Message> findPerson(String userName,String pass)async {
+    users = await PersonDao().getAll();
+    msg.isCorrect = false;
+    msg.message = "wrong user";
+    print(userName);
+    print(pass);
+    for (Person p in users) {
+      if (p.userName == userName && p.password == pass) {
+        msg.isCorrect = true;
+        msg.message = "valid user";
+      }
 
-      for(Person p in value){
-         persons.add(p);
-      }
-    });
-    for(Person p in persons){
-      if(p.userName!=userName){
-        msg.message="Wrong User";
-        msg.isCorrect= false;
-        return msg;
-      }
-      else if(p.password!= pass){
-        msg.message= " wrong password";
-        msg.isCorrect= false;
-        return msg;
-      }
-      return msg;
-    }
 
+    }  return msg;
   }
-
-
   checkUserName(String userName) {
     Message msg = Message();
     if (userName.isEmpty) {

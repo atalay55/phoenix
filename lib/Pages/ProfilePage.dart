@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
@@ -9,7 +8,7 @@ import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
 import 'package:phoenix/Validator/RegisterValidator.dart';
 
 class ProfilePage extends StatefulWidget {
-  Person _person;
+  final Person  _person;
 
   ProfilePage(this._person);
 
@@ -18,13 +17,14 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool changeEmailAndPhone = false;
+  bool changeUserNameAndPhone = false;
   Person loginPersson;
   File _image;
 
   @override
   void initState() {
     loginPersson = widget._person;
+    print(widget._person.userImage);
   }
 
   Future getImageWithGallery() async {
@@ -50,8 +50,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    String userName = widget._person.userName;
-    String phone=widget._person.phoneNum;
+
+
     var pageScreen = MediaQuery.of(context).size;
     var pageWidth = pageScreen.width;
     return ListView(children: [
@@ -77,8 +77,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 },
                                 onLongPress: () {},
                                 child: CircleAvatar(
+                                  backgroundColor: Colors.white70,
                                   backgroundImage:
-                                      AssetImage(widget._person.userImage?? Icon(Icons.error_outline)),
+                                      AssetImage(widget._person.userImage ?? "Images/User.png")
                                 ))),
                       ),
                       Column(children: [
@@ -100,9 +101,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: IconButton(
                             onPressed: () {
                               setState(() {
-                                changeEmailAndPhone
-                                    ? changeEmailAndPhone = false
-                                    : changeEmailAndPhone = true;
+                                changeUserNameAndPhone
+                                    ? changeUserNameAndPhone = false
+                                    : changeUserNameAndPhone = true;
                               });
                             },
                             icon: const Icon(Icons.build)),
@@ -112,23 +113,22 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ))),
       TextFormField(
-        enabled: changeEmailAndPhone,
+        enabled: changeUserNameAndPhone,
         decoration: InputDecoration(
-            icon: const Icon(Icons.person), hintText: loginPersson.userName??"sdad"),
+            icon: const Icon(Icons.person), hintText: loginPersson.userName??"Error"),
         onChanged: (value) {
           if (RegisterValidator().checkUserName(value)) {
-            userName = value;
+            widget._person.userName = value;
             PersonDao().updatePersonUserName(widget._person.id, value);
           }
         },
       ),
       TextField(
-        enabled: changeEmailAndPhone,
+        enabled: changeUserNameAndPhone,
         decoration: InputDecoration(
             icon: const Icon(Icons.phone), hintText: loginPersson.phoneNum),
         onChanged: (value) {
-            print("çalıstı");
-            phone=value;
+            widget._person.phoneNum=value;
             PersonDao().updatePersonPhone(widget._person.id, value);
         },
       ),
@@ -137,10 +137,10 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: const Icon(Icons.support_agent),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
-          Navigator.pushAndRemoveUntil(
+          Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomePage(widget._person)),
-              (route) => false);
+              );
         },
       ),
       ListTile(
@@ -148,10 +148,10 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: const Icon(Icons.location_city),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
-          Navigator.pushAndRemoveUntil(
+          Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomePage(widget._person)),
-              (route) => false);
+              );
         },
       ),
       ListTile(
@@ -159,10 +159,10 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: const Icon(Icons.favorite),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
-          Navigator.pushAndRemoveUntil(
+          Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomePage(widget._person)),
-              (route) => false);
+              );
         },
       ),
       ListTile(
@@ -170,10 +170,9 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: const Icon(Icons.shopping_basket),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
-          Navigator.pushAndRemoveUntil(
+          Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage(widget._person)),
-              (route) => false);
+              MaterialPageRoute(builder: (context) => HomePage(widget._person)),);
         },
       ),
       ListTile(
@@ -181,10 +180,10 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: const Icon(Icons.key),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
-          Navigator.pushAndRemoveUntil(
+          Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomePage(widget._person)),
-              (route) => false);
+            );
         },
       ),
       ListTile(
@@ -192,10 +191,10 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: const Icon(Icons.help),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
-          Navigator.pushAndRemoveUntil(
+          Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomePage(widget._person)),
-              (route) => false);
+          );
         },
       ),
       ListTile(
@@ -203,10 +202,10 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: const Icon(Icons.exit_to_app),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
-          Navigator.pushAndRemoveUntil(
+          Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => LoginPage()),
-              (route) => false);
+              );
         },
       ),
     ]);

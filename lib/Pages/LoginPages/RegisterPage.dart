@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Pages/HomePage.dart';
@@ -24,13 +22,8 @@ class _RegisterPageState extends State<RegisterPage> {
   var _passCont = TextEditingController();
   bool _isAgree =false;
   var _dateCont = TextEditingController();
+  bool isPass;
 
-
-  @override
-  void initState() {
-
-    print(_isAgree);
-  }
   @override
   Widget build(BuildContext context) {
     var pageScreen = MediaQuery.of(context).size;
@@ -243,18 +236,24 @@ class _RegisterPageState extends State<RegisterPage> {
                                       userName: _userNameCont.text,
                                       phoneNum:_phoneNumCont.text ,
                                       password: _passCont.text,
+                                      date:_dateCont.text,
                                   );
-                                  RegisterValidator().checkPersonExits(person)
+                                  if(_isAgree){
+                                    PersonDao().addPerson(person);
+                                    snackbar(context, "Kayit Basarili");
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => LoginPage()),
+                                            (route) => false);
+                                  }
+
+                              /*  RegisterValidator().checkPersonExits(person)
                                       .then((value) {
                                         if(_isAgree){
                                            if(value){
-                                          PersonDao().addPerson(person);
-                                          snackbar(context, "Kayit Basarili");
-                                          Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => HomePage(person)),
-                                              (route) => false);
+                                             addPerson(person,context);
+
                                     }else{
                                       snackbar(context, "kullanici mevcut");
                                     }
@@ -262,7 +261,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   }else{
                                     snackbar(context, "please check üye gizlilik politikası");
                                   }}
-                                  );
+                                  );*/
                                 } else {
                                   print("not valid format");
                                 }
@@ -277,6 +276,11 @@ class _RegisterPageState extends State<RegisterPage> {
             ),)
           ]))));
   }
+
+}
+
+Future<void> addPerson(Person person,context)async{
+
 
 }
 

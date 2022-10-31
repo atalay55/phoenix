@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
+import 'package:phoenix/Entity/Mesage.dart';
 import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Pages/HomePage.dart';
 import 'package:phoenix/Pages/LoginPages/ForgetPassPage.dart';
@@ -15,22 +16,20 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   Person _person;
 
-  Future<Person> getPerson()async{
+  Future<Person> getPerson( userName,pass)async{
     List<Person> users = await PersonDao().getAll();
-
+    print("get user gelen $userName ,  $pass");
+    print("---------");
     for(Person p in users){
-      if(p.userName==_userNameCont .text&& p.password==_passCont.text){
+      if(p.userName==userName&& p.password==pass){
+        print("çalıştım");
         _person=p;
         return _person;
       }
-      return null;
     }
+
   }
-  @override
-  void initState() {
-    getPerson();
-    super.initState();
-  }
+
 
   var _rememberMe = false;
   var _userNameCont = TextEditingController();
@@ -82,14 +81,14 @@ class _LoginPageState extends State<LoginPage> {
                                     width: 2, color: Colors.blueGrey),
                                 borderRadius: BorderRadius.circular(8.0)),
                             label: Text(
-                              "PersonelNum",
+                              "UserName",
                               style: TextStyle(fontSize: 15.0),
                             ),
                             fillColor: Colors.white,
                           ),
                           validator: (value) {
 
-                           return loginValidator().checkUserName(value);
+                           return LoginValidator().checkUserName(value);
                           }
                         ),
                       ),
@@ -126,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (value) {
 
-                            return loginValidator().checkPass(value);
+                            return LoginValidator().checkPass(value);
                           },
                         ),
                       ),
@@ -173,20 +172,9 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () {
                                   bool isTrue=_formKey.currentState.validate();
                                   setState(() {
-                                    loginValidator().findPerson(_userNameCont .text,_passCont.text).then((value) {
-                                     if(value.isCorrect){
-                                       getPerson().then((value) {
-                                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(value)), (route) => false);
-                                       });
+                                    print("calıstım");
 
-
-                                     }if(isTrue){
-                                        return loginValidator().msg.message.toString();
-                                     }else{
-                                       print(value.message);
-                                       snackbar(context, value.message);
-                                     }
-                                    });
+                                     login(_userNameCont.text, _passCont.text, isTrue);
 
                                   });
                                 }),
@@ -278,9 +266,30 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+login(String userName,String pass,bool isTrue)async{
+    Message msg= await LoginValidator().findPerson(userName,pass);
+
+     if(msg.isCorrect){
+       await  getPerson(_userNameCont.text.toString(),_passCont.text.toString()).then((value) {
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(value)), (route) => false);
+        });
+      }
+    if(isTrue){
+        return LoginValidator().msg.message.toString();
+      }else{
+
+        if(userName.isNotEmpty || pass.isNotEmpty)
+          snackbar(context, msg.message);
+
+      }
+
+  }
 }
 
-snackbar(BuildContext context, var message, {duration = 4}) {
+
+
+snackbar(BuildContext context, var message, {duration = 3}) {
   return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     duration: Duration(seconds: duration),
     content: Text(message),
