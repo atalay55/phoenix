@@ -77,6 +77,20 @@ class ProductValidator {
     return null;
   }
 
+  checkPrductDesc(String desc) {
+
+    Message msg = Message();
+    if (desc.isEmpty) {
+      msg.message = " Hakkında alanı boş geçilemez";
+      msg.isCorrect = false;
+      return msg.message;
+    }
+
+
+    msg.isCorrect = true;
+    return null;
+  }
+
 
 
 }

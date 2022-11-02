@@ -98,7 +98,7 @@ class _CardPageState extends State<CardPage> {
                                 padding: const EdgeInsets.all(12.0),
                                 child: ListTile(
 
-                                  leading: SizedBox(width: 60,
+                                  leading: SizedBox(width: width/6,
                                     child: CachedNetworkImage(imageUrl: _products[item]
                                         .imagePath ?? "Images/deneme1",),
                                   ),

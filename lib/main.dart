@@ -39,11 +39,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> get()async{
+
   }
 
 @override
   void initState() {
-    get();
+
 
 
   }

@@ -15,6 +15,7 @@ class _ProductAddPageState extends State<ProductAddPage> {
   var _priceCont= TextEditingController();
   var _pieceCont= TextEditingController();
   var _imagePath= TextEditingController();
+  var _productDesc= TextEditingController();
   var _formKey = GlobalKey<FormState>();
 
   @override
@@ -166,7 +167,42 @@ class _ProductAddPageState extends State<ProductAddPage> {
                               style: TextStyle(fontSize: 15.0),
                             ),
                             fillColor: Colors.white,
-                          ),validator:(value){ return ProductValidator().checkPrductImage(value);},
+                          ),validator:(value){ return ProductValidator().checkPrductDesc(value);},
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: pageHeight / 40,
+                            left: pageWidth / 10,
+                            right: pageWidth / 10),
+                        child: TextFormField(
+                          controller: _productDesc,
+                          decoration: InputDecoration(
+                            errorBorder: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(width: 2, color: Colors.red),
+                                borderRadius: BorderRadius.circular(8.0)),
+                            focusedErrorBorder: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(width: 2, color: Colors.red),
+                                borderRadius: BorderRadius.circular(8.0)),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(width: 2, color: Colors.black87),
+                                borderRadius: BorderRadius.circular(8.0)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 2, color: Colors.blueGrey),
+                                borderRadius: BorderRadius.circular(8.0)),
+                            label: Text(
+                              "Product description",
+                              style: TextStyle(fontSize: 15.0),
+                            ),
+                            fillColor: Colors.white,
+                          ),
+                          validator:(value){ return ProductValidator().checkProductName(value);},
+
+
                         ),
                       ),
                       Padding(
@@ -186,13 +222,16 @@ class _ProductAddPageState extends State<ProductAddPage> {
                                 child: Text("Add"),
                               onPressed: (){
                                  var isCorrect = _formKey.currentState.validate();
-                                  var product=Product(productName: _productNameCont.text,price: double.parse(_priceCont.text),pieces:int.parse(_pieceCont.text),imagePath: _imagePath.text);
+                                  var product=Product(productName: _productNameCont.text,
+                                      price: double.parse(_priceCont.text),pieces:int.parse(_pieceCont.text),
+                                      imagePath: _imagePath.text,productDetail: _productDesc.text);
                                   setState(() {
                                     ProductDao().addProduct(product);
                                     _productNameCont.text="";
                                     _priceCont.text="";
                                     _pieceCont.text="";
                                     _imagePath.text="";
+                                    _productDesc.text="";
 
                                     print("kaydedildi");
 

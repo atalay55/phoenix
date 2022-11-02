@@ -55,12 +55,7 @@ myCard({Product product,pagewidth,context,Person person} ){
             padding:  EdgeInsets.only(top: 10),
             child: Text(" ${product.productDetail.length>120? product.productDetail.substring(0,90):null} ...",style: TextStyle(color: Colors.black87,fontSize: 16,)),
           ),
-          /*Padding(
-            padding: const EdgeInsets.only( top:10.0),
-            child: ElevatedButton(onPressed: (){
-             PersonDao().addProductToProductList(person.id,product.id.toString());
-            }, child: Text("Sepete Ekle")),
-          )*/
+
         ],
       ),
     ),
