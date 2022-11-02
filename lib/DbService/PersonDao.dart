@@ -47,6 +47,14 @@ class PersonDao {
     await db.update("person", personDb, where: "id=?", whereArgs: [id]);
   }
 
+  Future<void> updateImage(int id, String userImage) async {
+    var db = await VeritabaniYardimci.veriTabaniErisim();
+    var personDb = Map<String, dynamic>();
+    personDb["userImage"] = userImage;
+
+    await db.update("person", personDb, where: "id=?", whereArgs: [id]);
+  }
+
   Future<void> updatePersonUserName(int id, String userName) async {
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();
@@ -82,8 +90,8 @@ class PersonDao {
     });
   }
 
-  Future<void> addProductToProductList(id, String productsId) async {
-    var str = await getProducts(id);
+  Future<void> addProductToProductList(personid, String productsId) async {
+    var str = await getProducts(personid);
     String temStr;
     if (str.first == null) {
       str.clear();
@@ -94,8 +102,9 @@ class PersonDao {
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();
     personDb["cardProductId"] = temStr;
+    print(temStr);
 
-    await db.update("person", personDb, where: "id=?", whereArgs: [id]);
+    await db.update("person", personDb, where: "id=?", whereArgs: [personid]);
   }
 
   Future<void> deleteProductToProductList(userId, String productsId) async {

@@ -9,23 +9,15 @@ class LoginValidator{
   Person person;
 
 
-  Future<List<Person>>isPersonNumExits()async{
-    users = await PersonDao().getAll();
-    return users;
-  }
-
   Future<Message> findPerson(String userName,String pass)async {
     users = await PersonDao().getAll();
     msg.isCorrect = false;
     msg.message = "wrong user";
-    print(userName);
-    print(pass);
     for (Person p in users) {
       if (p.userName == userName && p.password == pass) {
         msg.isCorrect = true;
         msg.message = "valid user";
       }
-
 
     }  return msg;
   }

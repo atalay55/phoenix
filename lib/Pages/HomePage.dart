@@ -31,17 +31,20 @@ class _MainPageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var page = MediaQuery.of(context).size;
     var pageWidth = page.width;
+    var pageHight = page.height;
     List<Widget> pageList = [
       GridViewPage(isSearch, search,widget._person),
       ProfilePage(widget._person),
       campaignPage(),
       ProductAddPage(),
-      CardPage.empty()
+      CardPage(widget._person.id.toString())
     ];
     return Scaffold(
-      appBar:showSearchBar
+
+      appBar:
+      showSearchBar
           ? AppBar(
-              backgroundColor: Colors.purpleAccent,
+              backgroundColor: Colors.indigoAccent,
               title: isSearch
                   ? TextField(
                       decoration: const InputDecoration(
@@ -88,105 +91,98 @@ class _MainPageState extends State<HomePage> {
                       }, icon: Icon(Icons.shopping_bag)),
                 ])
           : AppBar(
-             backgroundColor: Colors.purpleAccent,
+             backgroundColor: Colors.indigoAccent,
               title: Text(title),
             ),
       body: pageList[item],
       drawer: Drawer(
-        child: ListView(
+
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: pageWidth / 3,
-              child: DrawerHeader(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                            width: pageWidth / 4,
-                            height: pageWidth/8,
-                            child: Image.asset("Images/anka.png")),
-                        const Padding(
-                          padding:  EdgeInsets.only(left: 12),
-                          child:  Text(
-                            "Anka",
-                            style: TextStyle(fontSize: 24, fontStyle: FontStyle.italic,),
-                          ),
-                        )
-                      ],
-                    ),Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                        children: [popMenuAppBar(context, poplist)]),
-                  ],
-                ),
-                decoration: BoxDecoration(
-                 color:Colors.purple
-                ),
+              width: pageWidth,
+              height:pageHight/1.1,
+              child: ListView(
+                children: [
+
+                  UserAccountsDrawerHeader(
+                    accountName: Text("Phoneix"),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundImage: AssetImage("Images/deneme1.png")
+                    ),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          "https://media.istockphoto.com/photos/abstract-composition-with-connecting-dots-"
+                              "and-lines-and-triangles-picture-id1361855796?b=1&k=20&m=1361855796&s=170667a&w="
+                              "0&h=ntG3yH87Uxz7n6fDQNAe-58HuOsuBDm_cgIaDFZSVoc=",
+                        ),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+
+                  ),
+                  ListTile(
+                    title: Text("Anasayfa"),
+                    selectedColor: Colors.blueAccent,
+                    onTap: () {
+                      setState(() {
+                        showSearchBar = true;
+                        title = "Anka";
+                        item = 0;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Profile"),
+                    selectedColor: Colors.blueAccent,
+                    onTap: () {
+                      setState(() {
+                        showSearchBar = false;
+                        title = "Profile ";
+                        item = 1;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text("Campain "),
+                    selectedColor: Colors.blueAccent,
+                    onTap: () {
+                      setState(() {
+                        showSearchBar = false;
+                        title = "Campain ";
+                        item = 2;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text("ProductAdd "),
+                    selectedColor: Colors.blueAccent,
+                    onTap: () {
+                      setState(() {
+                        showSearchBar = false;
+                        title = "ProductAdd ";
+                        item = 3;
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+
+                ],
               ),
             ),
-            ListTile(
-              title: Text("Anasayfa"),
-              selectedColor: Colors.blueAccent,
-              onTap: () {
-                setState(() {
-                  showSearchBar = true;
-                  title = "Anka";
-                  item = 0;
-                });
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text("Profile"),
-              selectedColor: Colors.blueAccent,
-              onTap: () {
-                setState(() {
-                  showSearchBar = false;
-                  title = "Profile ";
-                  item = 1;
-                });
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text("Campain "),
-              selectedColor: Colors.blueAccent,
-              onTap: () {
-                setState(() {
-                  showSearchBar = false;
-                  title = "Campain ";
-                  item = 2;
-                });
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text("ProductAdd "),
-              selectedColor: Colors.blueAccent,
-              onTap: () {
-                setState(() {
-                  showSearchBar = false;
-                  title = "ProductAdd ";
-                  item = 3;
-                });
-                Navigator.pop(context);
-              },
-            ), ListTile(
-              title: Text("CardPage "),
-              selectedColor: Colors.blueAccent,
-              onTap: () {
-                setState(() {
-                  showSearchBar = false;
-                  title = "Card Page";
-                  item = 4;
-                });
-                Navigator.pop(context);
-              },
-            ),
-
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [IconButton(onPressed: (){
+                PopMenu().exitAlert(context);
+              }, icon: Icon(Icons.close))],
+            )
           ],
         ),
       ),

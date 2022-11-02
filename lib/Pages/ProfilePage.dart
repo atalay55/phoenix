@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
 import 'package:phoenix/Entity/Person.dart';
+import 'package:phoenix/Pages/CanliDestek.dart';
+import 'package:phoenix/Pages/CardPage.dart';
 import 'package:phoenix/Pages/HomePage.dart';
 import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
 import 'package:phoenix/Validator/RegisterValidator.dart';
 
 class ProfilePage extends StatefulWidget {
-  final Person  _person;
+  final Person _person;
 
   ProfilePage(this._person);
 
@@ -50,13 +52,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     var pageScreen = MediaQuery.of(context).size;
     var pageWidth = pageScreen.width;
     return ListView(children: [
       Container(
-          color: Colors.black45,
+          color: Colors.black26,
           child: SizedBox(
               height: pageWidth / 4.5,
               child: Column(
@@ -73,14 +73,15 @@ class _ProfilePageState extends State<ProfilePage> {
                             width: pageWidth / 8,
                             child: GestureDetector(
                                 onTap: () {
-                                    buttomSheet(context, pageWidth, getImageWithGallery, getImageWithCamera);
+                                  buttomSheet(context, pageWidth,
+                                      getImageWithGallery, getImageWithCamera);
                                 },
                                 onLongPress: () {},
                                 child: CircleAvatar(
-                                  backgroundColor: Colors.white70,
-                                  backgroundImage:
-                                      AssetImage(widget._person.userImage ?? "Images/User.png")
-                                ))),
+                                    backgroundColor: Colors.white70,
+                                    backgroundImage: AssetImage(
+                                        widget._person.userImage ??
+                                            "Images/User.png")))),
                       ),
                       Column(children: [
                         Padding(
@@ -115,7 +116,8 @@ class _ProfilePageState extends State<ProfilePage> {
       TextFormField(
         enabled: changeUserNameAndPhone,
         decoration: InputDecoration(
-            icon: const Icon(Icons.person), hintText: loginPersson.userName??"Error"),
+            icon: const Icon(Icons.person),
+            hintText: loginPersson.userName ?? "Error"),
         onChanged: (value) {
           if (RegisterValidator().checkUserName(value)) {
             widget._person.userName = value;
@@ -128,8 +130,8 @@ class _ProfilePageState extends State<ProfilePage> {
         decoration: InputDecoration(
             icon: const Icon(Icons.phone), hintText: loginPersson.phoneNum),
         onChanged: (value) {
-            widget._person.phoneNum=value;
-            PersonDao().updatePersonPhone(widget._person.id, value);
+          widget._person.phoneNum = value;
+          PersonDao().updatePersonPhone(widget._person.id, value);
         },
       ),
       ListTile(
@@ -138,9 +140,9 @@ class _ProfilePageState extends State<ProfilePage> {
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage(widget._person)),
-              );
+            context,
+            MaterialPageRoute(builder: (context) => CanliDestek()),
+          );
         },
       ),
       ListTile(
@@ -149,9 +151,9 @@ class _ProfilePageState extends State<ProfilePage> {
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage(widget._person)),
-              );
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(widget._person)),
+          );
         },
       ),
       ListTile(
@@ -160,9 +162,9 @@ class _ProfilePageState extends State<ProfilePage> {
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage(widget._person)),
-              );
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(widget._person)),
+          );
         },
       ),
       ListTile(
@@ -171,8 +173,9 @@ class _ProfilePageState extends State<ProfilePage> {
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage(widget._person)),);
+            context,
+            MaterialPageRoute(builder: (context) => CardPage(widget._person.id.toString())),
+          );
         },
       ),
       ListTile(
@@ -181,9 +184,9 @@ class _ProfilePageState extends State<ProfilePage> {
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage(widget._person)),
-            );
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(widget._person)),
+          );
         },
       ),
       ListTile(
@@ -192,8 +195,8 @@ class _ProfilePageState extends State<ProfilePage> {
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage(widget._person)),
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(widget._person)),
           );
         },
       ),
@@ -203,17 +206,17 @@ class _ProfilePageState extends State<ProfilePage> {
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-              );
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
         },
       ),
     ]);
   }
 }
 
-buttomSheet(context,pageWidth,getImageWithGallery,getImageWithCamera){
-  return  showBottomSheet(
+buttomSheet(context, pageWidth, getImageWithGallery, getImageWithCamera) {
+  return showBottomSheet(
       context: context,
       builder: (context) {
         return Container(
@@ -221,60 +224,49 @@ buttomSheet(context,pageWidth,getImageWithGallery,getImageWithCamera){
           color: Colors.white12,
           child: Center(
               child: Column(
-                mainAxisAlignment:
-                MainAxisAlignment.start,
-                crossAxisAlignment:
-                CrossAxisAlignment.center,
-                children: [
-                  Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.start,
-                      crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 15),
-                          child: IconButton(
-                              onPressed: () {
-                                getImageWithGallery();
-                              },
-                              icon: Icon(
-                                Icons
-                                    .browse_gallery_sharp,
-                                size: pageWidth / 8,
-                              )),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 25),
-                          child: IconButton(
-                              onPressed: () {
-                                getImageWithCamera();
-                              },
-                              icon: Icon(
-                                Icons
-                                    .add_a_photo_outlined,
-                                size: pageWidth / 8,
-                              )),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 25),
-                          child: IconButton(
-                              onPressed: () {
-                                print(
-                                    "drivera gidicek");
-                              },
-                              icon: Icon(
-                                Icons
-                                    .drive_file_move_outline,
-                                size: pageWidth / 8,
-                              )),
-                        ),
-                      ]),
-                ],
-              )),
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 15),
+                      child: IconButton(
+                          onPressed: () {
+                            getImageWithGallery();
+                          },
+                          icon: Icon(
+                            Icons.browse_gallery_sharp,
+                            size: pageWidth / 8,
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 25),
+                      child: IconButton(
+                          onPressed: () {
+                            getImageWithCamera();
+                          },
+                          icon: Icon(
+                            Icons.add_a_photo_outlined,
+                            size: pageWidth / 8,
+                          )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 25),
+                      child: IconButton(
+                          onPressed: () {
+                            print("drivera gidicek");
+                          },
+                          icon: Icon(
+                            Icons.drive_file_move_outline,
+                            size: pageWidth / 8,
+                          )),
+                    ),
+                  ]),
+            ],
+          )),
         );
       });
 }

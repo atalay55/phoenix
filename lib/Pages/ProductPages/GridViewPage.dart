@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/DbService/ProductDao.dart';
 import 'package:phoenix/Entity/Product.dart';
+import 'package:phoenix/Pages/ProductPages/UrunPage.dart';
 import 'package:phoenix/Theme/MyCard.dart';
 
 import '../../Entity/Person.dart';
@@ -50,7 +51,7 @@ class _GridViewPageState extends State<GridViewPage> {
               itemBuilder: (context, item) {
                 return GestureDetector(
                     child: MyCard(product: _products[item], pagewidth: pageWidth, person: widget._person),
-
+                  onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>UrunPage(widget._person,_products[item])));},
                     );
 
               });

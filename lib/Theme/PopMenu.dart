@@ -11,7 +11,6 @@ class PopMenu extends StatelessWidget {
   Widget build(BuildContext context) {
    return popMenuAppBar(context, poplist);
 
-
   }
 
    gizlilikAlert(context) {
@@ -40,7 +39,6 @@ class PopMenu extends StatelessWidget {
            );
          });
    }
-}
 
 exitAlert(context) {
   showDialog(
@@ -83,3 +81,4 @@ popMenuAppBar(context,poplist) {
 
 
 
+}

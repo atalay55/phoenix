@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:phoenix/DbService/PersonDao.dart';
+import 'package:phoenix/Entity/Person.dart';
 import 'package:phoenix/Entity/Product.dart';
-import 'package:phoenix/Pages/CardPage.dart';
 import 'package:phoenix/Theme/SnopZoom.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 
@@ -9,7 +10,8 @@ import 'package:pinch_zoom/pinch_zoom.dart';
 class UrunPage extends StatefulWidget {
 
   Product product;
-  UrunPage(this.product);
+  Person person;
+  UrunPage(this.person,this.product);
   UrunPage.empty();
 
   @override
@@ -23,7 +25,7 @@ class _UrunPageState extends State<UrunPage> {
     var pageWidth = page.width;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.pinkAccent,
+          backgroundColor: Colors.indigoAccent,
           title: const Text("Urün Page"),
         ),
         body: Center(
@@ -33,15 +35,18 @@ class _UrunPageState extends State<UrunPage> {
               SizedBox(
                   width: pageWidth / 2.5,
                   height: pageWidth/2.5,
-                  child: PinchZoom(
-                    image:InteractiveViewer(clipBehavior: Clip.none,child:
-                    AspectRatio(aspectRatio: 1,child: ClipRRect(borderRadius: BorderRadius.circular(20),
-                      child:  CachedNetworkImage(imageUrl:widget.product.imagePath ,width:pageWidth/2,height: pageWidth/2, fit: BoxFit.cover,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
-                        errorWidget: (context,url,error)=>Container(color: Colors.black26,child: Icon(Icons.error_outline),),),)),)
+                  child: GestureDetector(
+                    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>SnopZoom(widget.product.imagePath)));},
+                    child: PinchZoom(
+                      image:InteractiveViewer(clipBehavior: Clip.none,child:
+                      AspectRatio(aspectRatio: 1,child: ClipRRect(borderRadius: BorderRadius.circular(20),
+                        child:  CachedNetworkImage(imageUrl:widget.product.imagePath ,width:pageWidth/2,height: pageWidth/2, fit: BoxFit.cover,
+                          placeholder: (context, url) => const CircularProgressIndicator(),
+                          errorWidget: (context,url,error)=>Container(color: Colors.black26,child: Icon(Icons.error_outline),),),)),)
 
 
-                    ,resetDuration: const Duration(milliseconds: 100),
+                      ,resetDuration: const Duration(milliseconds: 100),
+                    ),
                   )), // Image.asset(widget.product.imagePath)),
               Padding(
                 padding:  EdgeInsets.only(top: pageWidth/20),
@@ -63,9 +68,10 @@ class _UrunPageState extends State<UrunPage> {
                       child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>SnopZoom(widget.product.imagePath),));
-                            });
 
+                              PersonDao().addProductToProductList( widget.person.id,widget.product.id.toString());
+                            });
+                               // PersonDao().deleteAllProductToProductList(widget.person.id);
                           },
                           child: Text("Sepete Ekle ")),
                     ),

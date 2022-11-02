@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phoenix/DbService/PersonDao.dart';
+import 'package:phoenix/DbService/ProductDao.dart';
 import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
 
 
@@ -37,11 +38,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  Future<void> getAll()async{
+  Future<void> get()async{
   }
+
 @override
   void initState() {
-    getAll();
+    get();
+
+
   }
   @override
   Widget build(BuildContext context) {

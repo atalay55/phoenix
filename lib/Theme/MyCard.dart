@@ -31,11 +31,11 @@ myCard({Product product,pagewidth,context,Person person} ){
         children: [
 
 
-          Container( height: pagewidth/3,
+          Container(
+              height: pagewidth/3,
               child:Padding(
                 padding: const EdgeInsets.only(top: 15,left: 10,right: 10),
                 child:  GestureDetector(
-
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: CachedNetworkImage(imageUrl:product.imagePath ,width:pagewidth/2, fit: BoxFit.cover,
@@ -51,17 +51,16 @@ myCard({Product product,pagewidth,context,Person person} ){
             padding:  EdgeInsets.only(top: 20),
             child: Text(product.productName,style: TextStyle(color: Colors.white,fontSize: 25),),
           ),
-          Padding(
+           Padding(
             padding:  EdgeInsets.only(top: 10),
-            child: Text(" ${product.price.toString()} TL ",style: TextStyle(color: Colors.white70,fontSize: 16)),
+            child: Text(" ${product.productDetail.length>120? product.productDetail.substring(0,90):null} ...",style: TextStyle(color: Colors.black87,fontSize: 16,)),
           ),
-          Padding(
+          /*Padding(
             padding: const EdgeInsets.only( top:10.0),
             child: ElevatedButton(onPressed: (){
-              //PersonDao().deleteAllProductToProductList(person.id);
-              PersonDao().addProductToProductList(person.id,product.id.toString());
+             PersonDao().addProductToProductList(person.id,product.id.toString());
             }, child: Text("Sepete Ekle")),
-          )
+          )*/
         ],
       ),
     ),

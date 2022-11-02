@@ -18,11 +18,9 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<Person> getPerson( userName,pass)async{
     List<Person> users = await PersonDao().getAll();
-    print("get user gelen $userName ,  $pass");
-    print("---------");
     for(Person p in users){
       if(p.userName==userName&& p.password==pass){
-        print("çalıştım");
+
         _person=p;
         return _person;
       }
@@ -142,7 +140,6 @@ class _LoginPageState extends State<LoginPage> {
                               onChanged: (value) {
                                 setState(() {
                                   print(value);
-
                                   _rememberMe = value;
                                 });
                               },
@@ -172,8 +169,6 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () {
                                   bool isTrue=_formKey.currentState.validate();
                                   setState(() {
-                                    print("calıstım");
-
                                      login(_userNameCont.text, _passCont.text, isTrue);
 
                                   });
