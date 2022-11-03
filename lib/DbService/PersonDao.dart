@@ -16,6 +16,7 @@ class PersonDao {
           password: satir["password"],
           products: satir["cardProductId"],
           date: satir["date"],
+          isRemember: satir["isRemember"],
           userImage: satir["userImage"]);
     });
   }
@@ -31,66 +32,98 @@ class PersonDao {
     personDb["cardProductId"] = person.products;
     personDb["date"] = person.date;
     personDb["userImage"] = person.userImage;
+    personDb["isRemember"]=person.isRemember;
     db.insert("person", personDb);
   }
 
-  Future<void> deletePerson(int id) async {
+
+  Future<List<Person>> getUser(int userId) async {
     var db = await VeritabaniYardimci.veriTabaniErisim();
-    db.delete("person", where: "id=$id");
+    List<Map<String, dynamic>> maps =
+    await db.rawQuery("SELECT * FROM person where id=${userId}");
+    return List.generate(maps.length, (index) {
+      var satir = maps[index];
+      return Person(
+          id: satir["id"],
+          name: satir["name"],
+          surName: satir["surName"],
+          userName: satir["userName"],
+          phoneNum: satir["phoneNumber"],
+          password: satir["password"],
+          products: satir["cardProductId"],
+          date: satir["date"],
+          isRemember: satir["isRemember"],
+          userImage: satir["userImage"]);
+    });
   }
 
-  Future<void> updatePersonPass(int id, String password) async {
+  Future<void> deletePerson(int userId) async {
+    var db = await VeritabaniYardimci.veriTabaniErisim();
+    db.delete("person", where: "id=$userId");
+  }
+
+  Future<void> updatePersonPass(int userId, String password) async {
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();
     personDb["password"] = password;
 
-    await db.update("person", personDb, where: "id=?", whereArgs: [id]);
+    await db.update("person", personDb, where: "id=?", whereArgs: [userId]);
   }
 
-  Future<void> updateImage(int id, String userImage) async {
+  Future<void> updateImage(int userId, String userImage) async {
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();
     personDb["userImage"] = userImage;
 
-    await db.update("person", personDb, where: "id=?", whereArgs: [id]);
+    await db.update("person", personDb, where: "id=?", whereArgs: [userId]);
   }
 
-  Future<void> updatePersonUserName(int id, String userName) async {
+  Future<void> updatePersonUserName(int userId, String userName) async {
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();
     personDb["userName"] = userName;
 
-    await db.update("person", personDb, where: "id=?", whereArgs: [id]);
+    await db.update("person", personDb, where: "id=?", whereArgs: [userId]);
   }
 
-  Future<void> updatePersonPhone(int id, String phone) async {
+  Future<void> updatePersonPhone(int userId, String phone) async {
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();
     personDb["phoneNumber"] = phone;
 
-    await db.update("person", personDb, where: "id=?", whereArgs: [id]);
+    await db.update("person", personDb, where: "id=?", whereArgs: [userId]);
   }
 
-  Future<void> updateProducts(id, String products) async {
+
+  Future<void> updateProducts(int userId, String products) async {
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();
     personDb["cardProductId"] = products;
 
-    await db.update("person", personDb, where: "id=?", whereArgs: [id]);
+    await db.update("person", personDb, where: "id=?", whereArgs: [userId]);
   }
 
 
-  Future<List<String>> getProducts(id) async {
+  Future<void> updateIsRemember(int userId, String isRemember) async {
+    var db = await VeritabaniYardimci.veriTabaniErisim();
+    var personDb = Map<String, dynamic>();
+    personDb["isRemember"] = isRemember;
+
+    await db.update("person", personDb, where: "id=?", whereArgs: [userId]);
+  }
+
+
+  Future<List<String>> getProducts(int userId) async {
     var db = await VeritabaniYardimci.veriTabaniErisim();
     List<Map<String, dynamic>> maps =
-        await db.rawQuery("SELECT cardProductId FROM person where id=${id}");
+        await db.rawQuery("SELECT cardProductId FROM person where id=${userId}");
     return List.generate(maps.length, (index) {
       var satir = maps[index];
       return satir["cardProductId"];
     });
   }
 
-  Future<void> addProductToProductList(personid, String productsId) async {
+  Future<void> addProductToProductList(int personid, String productsId) async {
     var str = await getProducts(personid);
     String temStr;
     if (str.first == null) {
@@ -107,7 +140,7 @@ class PersonDao {
     await db.update("person", personDb, where: "id=?", whereArgs: [personid]);
   }
 
-  Future<void> deleteProductToProductList(userId, String productsId) async {
+  Future<void> deleteProductToProductList(int userId, String productsId) async {
 
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();
@@ -116,7 +149,7 @@ class PersonDao {
     await db.update("person", personDb, where: "id=?", whereArgs: [userId]);
   }
 
-  Future<void> deleteAllProductToProductList(userId) async {
+  Future<void> deleteAllProductToProductList(int userId) async {
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();
     personDb["cardProductId"] = null;

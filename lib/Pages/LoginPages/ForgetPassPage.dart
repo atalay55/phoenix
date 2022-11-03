@@ -75,7 +75,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                                     width: 2, color: Colors.blueGrey),
                                 borderRadius: BorderRadius.circular(8.0)),
                             label: Text(
-                              "Personel Number",
+                              "User Name",
                               style: TextStyle(fontSize: 15.0),
                             ),
                             fillColor: Colors.white,

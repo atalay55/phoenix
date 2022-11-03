@@ -46,7 +46,7 @@ class _CardPageState extends State<CardPage> {
     if(str.isEmpty){
       str =null;
     }
-    PersonDao().deleteProductToProductList(widget.personId,str);
+    PersonDao().deleteProductToProductList(int.parse(widget.personId),str);
 
   }
 

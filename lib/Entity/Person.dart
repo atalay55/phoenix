@@ -9,7 +9,8 @@ class Person{
   String password;
   String userImage;
   String products;
+  String isRemember;
 
-  Person({ this.id,this.name, this.surName,  this.userName, this.phoneNum,this.password,this.products, this.date,this.userImage});
+  Person({ this.id,this.name, this.surName,  this.userName, this.phoneNum,this.password,this.products, this.date,this.userImage,this.isRemember});
 
 }

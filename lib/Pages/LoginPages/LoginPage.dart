@@ -6,9 +6,15 @@ import 'package:phoenix/Pages/HomePage.dart';
 import 'package:phoenix/Pages/LoginPages/ForgetPassPage.dart';
 import 'package:phoenix/Pages/LoginPages/RegisterPage.dart';
 import 'package:phoenix/Validator/LoginValidator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+
+
+
+bool rememberMe = false ;
 
 class LoginPage extends StatefulWidget {
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -29,7 +35,24 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
-  var _rememberMe = false;
+  setUserName(String userName) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userName', userName);
+  }
+  Future<String> getUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String stringValue = prefs.getString('userName');
+    return stringValue;
+  }
+
+  @override
+  void initState() {
+   if(rememberMe){
+    getUserName().then((value) =>  _userNameCont.text=value);
+   }
+
+  }
+
   var _userNameCont = TextEditingController();
   var _passCont = TextEditingController();
   var _formKey = GlobalKey<FormState>();
@@ -60,7 +83,8 @@ class _LoginPageState extends State<LoginPage> {
                             left: pageWidth / 10,
                             right: pageWidth / 10),
                         child: TextFormField(
-                          controller: _userNameCont ,
+                          controller: _userNameCont,
+
                           decoration: InputDecoration(
                             errorBorder: OutlineInputBorder(
                                 borderSide:
@@ -78,15 +102,13 @@ class _LoginPageState extends State<LoginPage> {
                                 borderSide: BorderSide(
                                     width: 2, color: Colors.blueGrey),
                                 borderRadius: BorderRadius.circular(8.0)),
-                            label: Text(
-                              "UserName",
-                              style: TextStyle(fontSize: 15.0),
-                            ),
                             fillColor: Colors.white,
+                            labelText: "user name"
                           ),
                           validator: (value) {
 
                            return LoginValidator().checkUserName(value);
+
                           }
                         ),
                       ),
@@ -136,11 +158,12 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             Text("Beni hatırla"),
                             Switch(
-                              value: _rememberMe,
+                              value: rememberMe,
                               onChanged: (value) {
                                 setState(() {
-                                  print(value);
-                                  _rememberMe = value;
+                                  rememberMe = value;
+
+
                                 });
                               },
                               activeColor: Colors.green,
@@ -169,7 +192,11 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () {
                                   bool isTrue=_formKey.currentState.validate();
                                   setState(() {
+
+
+
                                      login(_userNameCont.text, _passCont.text, isTrue);
+
 
                                   });
                                 }),
@@ -267,6 +294,8 @@ login(String userName,String pass,bool isTrue)async{
 
      if(msg.isCorrect){
        await  getPerson(_userNameCont.text.toString(),_passCont.text.toString()).then((value) {
+         PersonDao().updateIsRemember(value.id,rememberMe.toString());
+         setUserName(_userNameCont.text);
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(value)), (route) => false);
         });
       }
@@ -290,3 +319,4 @@ snackbar(BuildContext context, var message, {duration = 3}) {
     content: Text(message),
   ));
 }
+
