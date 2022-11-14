@@ -19,20 +19,19 @@ class CardPage extends StatefulWidget {
 
 class _CardPageState extends State<CardPage> {
 
-  List<Product> products;
-  List<int> pro=[];
+
+
   List<Product>_productss=[];
-  Product _product;
+  List<int> pro=[];
   var total;
 
   Future<void> convertproductList(personId) async {
+       List<Product> _comingProducts;
       List<int> productListInt= await parseProductList(personId);
       _productss.clear();
       for(int i in productListInt){
-        products= await ProductDao().getProductWithId(i);
-       _product=products.first;
-
-       _productss.add(_product);
+        _comingProducts= await ProductDao().getProductWithId(i);
+       _productss.add(_comingProducts.first);
       }
       total = _productss
           .map((item) => item.price)
@@ -41,6 +40,7 @@ class _CardPageState extends State<CardPage> {
 
   }
   Future<void> deleteProduct(int productId){
+
     pro.remove(productId);
     String str=pro.map((e) => e.toString()).join(",");
     if(str.isEmpty){

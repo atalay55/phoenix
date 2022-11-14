@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:phoenix/DbService/PersonDao.dart';
-import 'package:phoenix/DbService/ProductDao.dart';
 import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
 
 
-void main() {
+void main()async {
+
+
   runApp(const MyApp());
 }
 
+Future initialization(BuildContext context)async{
+  await Future.delayed(Duration(seconds: 3));
+}
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
 
