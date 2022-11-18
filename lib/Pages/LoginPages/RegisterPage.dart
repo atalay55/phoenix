@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         decoration: borderStyle("İsim"),
                                         validator: (value) {
                                           return RegisterValidator()
-                                              .checkName(value);
+                                              .checkName(value!);
                                         },
                                       )),
                                 ),
@@ -80,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       decoration: borderStyle("Soyisim"),
                                       validator: (value) {
                                         return RegisterValidator()
-                                            .checksurName(value);
+                                            .checksurName(value!);
                                       },
                                     ),
                                   ),
@@ -100,7 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 decoration: borderStyle("UserName"),
                                 validator: (value) {
                                   return RegisterValidator()
-                                      .checkUserName(value);
+                                      .checkUserName(value!);
                                 },
                               ),
                             ),
@@ -131,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           .then((value) {
                                         setState(() {
                                           String date =
-                                              "${value.day} : ${value.month} : ${value.year}";
+                                              "${value!.day} : ${value.month} : ${value.year}";
                                           _dateCont.text = date;
                                         });
                                       });
@@ -141,7 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       style: TextStyle(color: Colors.black54)),
                                 ),
                                 validator: (value) {
-                                  return RegisterValidator().checkDate(value);
+                                  return RegisterValidator().checkDate(value!);
                                 },
                               ),
                             ),
@@ -190,7 +190,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       onChanged: (value) {
                                         setState(() {
                                           print(value);
-                                          _isAgree = value;
+                                          _isAgree = value!;
                                         });
                                       }),
                                 ),
@@ -238,7 +238,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     child: ElevatedButton(
                                         onPressed: () {
                                           var isCorrect =
-                                              _formKey.currentState.validate();
+                                              _formKey.currentState!.validate();
                                           setState(() {
                                             if (isCorrect) {
                                               var person = Person(

@@ -8,9 +8,9 @@ import 'package:phoenix/Theme/SnopZoom.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 
 class UrunPage extends StatefulWidget {
-  Product product;
-  Person person;
-  double productRate = 0;
+  Product? product;
+  Person? person;
+  double? productRate = 0;
 
   UrunPage(this.person, this.product);
 
@@ -43,17 +43,18 @@ class _UrunPageState extends State<UrunPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  SnopZoom(widget.product.imagePath)));
+                                  SnopZoom(widget.product!.imagePath.toString())));
                     },
                     child: PinchZoom(
-                      image: InteractiveViewer(
+
+                      child: InteractiveViewer(
                         clipBehavior: Clip.none,
                         child: AspectRatio(
                             aspectRatio: 1,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: CachedNetworkImage(
-                                imageUrl: widget.product.imagePath,
+                                imageUrl: widget.product!.imagePath.toString(),
                                 width: pageWidth / 2,
                                 height: pageWidth / 2,
                                 fit: BoxFit.cover,
@@ -72,14 +73,14 @@ class _UrunPageState extends State<UrunPage> {
               Padding(
                 padding: EdgeInsets.only(top: pageWidth / 20),
                 child: Text(
-                  widget.product.productName,
+                  widget.product!.productName.toString(),
                   style: TextStyle(fontSize: 25, color: Colors.red),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: pageWidth / 26),
                 child: Text(
-                  widget.product.price.toString() + "  TL ",
+                  widget.product!.price.toString() + "  TL ",
                   style: TextStyle(fontSize: 20),
                 ),
               ),
@@ -99,9 +100,8 @@ class _UrunPageState extends State<UrunPage> {
                       child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              PersonDao().addProductToProductList(
-                                  widget.person.id,
-                                  widget.product.id.toString());
+                              //PersonDao().deleteAllProductToProductList(widget.person!.id!.toInt());
+                             PersonDao().addProductToProductList(widget.person!.id!.toInt(),widget.product!.id.toString());
                             });
                           },
                           child: Text("Sepete Ekle ")),

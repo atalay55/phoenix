@@ -14,14 +14,14 @@ class PaymetPage extends StatefulWidget {
 }
 
 class _PaymetPageState extends State<PaymetPage> {
-  String cardNumber = '';
-  String expiryDate = '';
-  String cardHolderName = '';
-  String cvvCode = '';
-  bool isCvvFocused = false;
-  bool registerCard = false;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
+  String? cardNumber = '';
+  String? expiryDate = '';
+  String? cardHolderName = '';
+  String? cvvCode = '';
+  bool? isCvvFocused = false;
+  bool? registerCard = false;
+  final GlobalKey<FormState>? formKey = GlobalKey<FormState>();
+  bool? _isLoading = false;
 
   void onCreditCardModelChange(CreditCardModel creditCardModel) {
     setState(() {
@@ -36,18 +36,18 @@ class _PaymetPageState extends State<PaymetPage> {
     String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MDBlYWY2YjU3NTEwNzI3NDg5YjAxYWIiLCJpYXQiOjE2MTU0NDkxMzl9.YTRsYrZqMDmByiOK3XqE6IuEtOaBRmJwtV_qBXy0wVI';
     String paymentUrl = 'http://10.202.0.149:3000/api/payment/iyzico';
     final body = Map<String,dynamic>();
-    var expireMonth = expiryDate.split('/')[0];
-    var expireYear = expiryDate.split('/')[1];
-    cardNumber = cardNumber.split(" ").join("");
-    print(expiryDate[0]);
-    print(expiryDate[1]);
+    var expireMonth = expiryDate!.split('/')[0];
+    var expireYear = expiryDate!.split('/')[1];
+    cardNumber = cardNumber!.split(" ").join("");
+    print(expiryDate![0]);
+    print(expiryDate![1]);
     body['cardNumber'] = cardNumber;
     body['expireMonth'] = expireMonth;
     body['expireYear'] = expireYear;
     body['cardHolderName'] = cardHolderName;
     body['cvc'] = cvvCode;
-    body['registerCard'] = registerCard ? '1' : '0';
-    final response = await http.post(paymentUrl,body: jsonEncode(body), headers: {
+    body['registerCard'] = registerCard! ? '1' : '0';
+    final response = await http.post(Uri.parse(paymentUrl),body: jsonEncode(body), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -100,20 +100,21 @@ class _PaymetPageState extends State<PaymetPage> {
             children: <Widget>[
               CreditCardWidget(
                 height: 155,
-                cardNumber: cardNumber,
-                expiryDate: expiryDate,
-                cardHolderName: cardHolderName,
-                cvvCode: cvvCode,
-                showBackView: isCvvFocused,
+                cardNumber: cardNumber!,
+                expiryDate: expiryDate!,
+                cardHolderName: cardHolderName!,
+                cvvCode: cvvCode!,
+                showBackView: isCvvFocused!,
                 obscureCardNumber: true,
                 obscureCardCvv: true,
+                onCreditCardWidgetChange: (CreditCardBrand ) {  },
               ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       CreditCardForm(
-                        formKey: formKey,
+                        formKey: formKey!,
                         obscureCvv: true,
                         obscureNumber: true,
                         cardNumberDecoration: const InputDecoration(
@@ -135,7 +136,7 @@ class _PaymetPageState extends State<PaymetPage> {
                           border: OutlineInputBorder(),
                           labelText: 'Card Holder',
                         ),
-                        onCreditCardModelChange: onCreditCardModelChange,
+                        onCreditCardModelChange: onCreditCardModelChange, cvvCode: '', expiryDate: '', cardNumber: '', cardHolderName: '', themeColor:Colors.red,
                       ),
                       ElevatedButton(
                           child: Container(

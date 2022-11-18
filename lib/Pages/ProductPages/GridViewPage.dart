@@ -20,13 +20,13 @@ class GridViewPage extends StatefulWidget {
 }
 
 class _GridViewPageState extends State<GridViewPage> {
-  Future<void> getAllProduct() async {
+  Future<List<Product>> getAllProduct() async {
     List<Product> products =await ProductDao().getAll();
 
     return products;
   }
 
-  Future<void> getProduct(name) async {
+  Future<List<Product>> getProduct(name) async {
     List<Product> products =await ProductDao().getProductWithName(name);
 
     return products;

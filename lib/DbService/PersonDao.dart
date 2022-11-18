@@ -113,7 +113,7 @@ class PersonDao {
   }
 
 
-  Future<List<String>> getProducts(int userId) async {
+  Future<List<String?>>? getProducts(int userId) async {
     var db = await VeritabaniYardimci.veriTabaniErisim();
     List<Map<String, dynamic>> maps =
         await db.rawQuery("SELECT cardProductId FROM person where id=${userId}");
@@ -123,14 +123,15 @@ class PersonDao {
     });
   }
 
-  Future<void> addProductToProductList(int personid, String productsId) async {
-    var str = await getProducts(personid);
-    String temStr;
-    if (str.first == null) {
-      str.clear();
+  Future<void> addProductToProductList(int personid, String? productsId) async {
+
+    List<String?>? str = await getProducts(personid);
+    String? temStr;
+    if (str?.first == null) {
+      str!.clear();
       temStr = productsId;
     } else {
-      temStr = str.first.toString() + "," + productsId;
+      temStr = str!.first.toString() + "," + productsId!;
     }
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();
@@ -140,7 +141,7 @@ class PersonDao {
     await db.update("person", personDb, where: "id=?", whereArgs: [personid]);
   }
 
-  Future<void> deleteProductToProductList(int userId, String productsId) async {
+  Future<void> deleteProductToProductList(int userId, String? productsId) async {
 
     var db = await VeritabaniYardimci.veriTabaniErisim();
     var personDb = Map<String, dynamic>();

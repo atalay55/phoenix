@@ -12,8 +12,8 @@ class ForgetPassPage extends StatefulWidget {
 
 class _ForgetPassPageState extends State<ForgetPassPage> {
 
-  Person _person;
-  Future<Person> getPerson()async{
+  Person? _person;
+  Future<Person?> getPerson()async{
     List<Person> users = await PersonDao().getAll();
 
     for(Person p in users){
@@ -81,7 +81,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                             fillColor: Colors.white,
                           ),
                           validator: (value) {
-                            return RegisterValidator().checkPass(value);
+                            return RegisterValidator().checkPass(value!);
                           },
                         ),
                       ),
@@ -117,7 +117,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                             fillColor: Colors.white,
                           ),
                           validator: (value) {
-                            return RegisterValidator().checkPass(value);
+                            return RegisterValidator().checkPass(value!);
                           },
                         ),
                       ),
@@ -139,7 +139,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                                 child: Text("Değistir"),
                                 onPressed: () {
                                   var isCorrect =
-                                  _formKey.currentState.validate();
+                                  _formKey.currentState!.validate();
                                   setState(() {
 
                                     if (isCorrect) {
@@ -147,7 +147,7 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                                         if(value==null){
                                           print("kullanici bulunamadi");
                                         }else{
-                                          PersonDao().updatePersonPass(value.id, _passCont.text);
+                                          PersonDao().updatePersonPass(value.id!, _passCont.text);
                                           print("basariyla gerçeklestirldi");
                                           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false);
 

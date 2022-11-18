@@ -8,8 +8,8 @@ import '../Entity/Person.dart';
 
 class MyCard extends StatelessWidget {
   var pagewidth;
-  Product product;
-  Person person;
+  Product? product;
+  Person? person;
 
   MyCard({ this.product , this.pagewidth,this.person});
 
@@ -19,7 +19,7 @@ class MyCard extends StatelessWidget {
     return myCard(product: product,pagewidth:pagewidth,context: context,person:person );
   }
 }
-myCard({Product product,pagewidth,context,Person person} ){
+myCard({Product? product,pagewidth,context,Person? person} ){
   return SizedBox(
     width: pagewidth/3,
     height: pagewidth/3,
@@ -38,22 +38,22 @@ myCard({Product product,pagewidth,context,Person person} ){
                 child:  GestureDetector(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: CachedNetworkImage(imageUrl:product.imagePath ,width:pagewidth/2, fit: BoxFit.cover,
+                    child: CachedNetworkImage(imageUrl:product!.imagePath.toString() ,width:pagewidth/2, fit: BoxFit.cover,
                         placeholder: (context, url) => const CircularProgressIndicator(),
                         errorWidget: (context,url,error)=>Container(color: Colors.black26,child: Icon(Icons.error_outline),),
                     ),
                   ),onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SnopZoom(product.imagePath)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SnopZoom(product.imagePath.toString())));
                 },
                 ),)
               )//Image.asset(product.imagePath)),
           , Padding(
             padding:  EdgeInsets.only(top: 20),
-            child: Text(product.productName,style: TextStyle(color: Colors.white,fontSize: 25),),
+            child: Text(product.productName.toString(),style: TextStyle(color: Colors.white,fontSize: 25),),
           ),
            Padding(
             padding:  EdgeInsets.only(top: 10),
-            child: Text(" ${product.productDetail.length>120? product.productDetail.substring(0,90):null} ...",style: TextStyle(color: Colors.black87,fontSize: 16,)),
+            child: Text(" ${product.productDetail!.length>120 ? product.productDetail!.substring(0,90):product.productDetail} ...",style: TextStyle(color: Colors.black87,fontSize: 16,)),
           ),
 
         ],

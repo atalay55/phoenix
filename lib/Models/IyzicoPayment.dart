@@ -36,30 +36,30 @@ class IyzicoPayment {
     this.hostReference,
   });
 
-  String status;
-  String locale;
-  int systemTime;
-  String conversationId;
-  int price;
-  double paidPrice;
-  int installment;
-  String paymentId;
-  int fraudStatus;
-  int merchantCommissionRate;
-  double merchantCommissionRateAmount;
-  double iyziCommissionRateAmount;
-  double iyziCommissionFee;
-  String cardType;
-  String cardAssociation;
-  String cardFamily;
-  String binNumber;
-  String lastFourDigits;
-  String basketId;
-  String currency;
-  List<ItemTransaction> itemTransactions;
-  String authCode;
-  String phase;
-  String hostReference;
+  String? status;
+  String? locale;
+  int? systemTime;
+  String? conversationId;
+  int? price;
+  double? paidPrice;
+  int? installment;
+  String? paymentId;
+  int? fraudStatus;
+  int? merchantCommissionRate;
+  double? merchantCommissionRateAmount;
+  double? iyziCommissionRateAmount;
+  double? iyziCommissionFee;
+  String? cardType;
+  String? cardAssociation;
+  String? cardFamily;
+  String? binNumber;
+  String? lastFourDigits;
+  String? basketId;
+  String? currency;
+  List<ItemTransaction>? itemTransactions;
+  String? authCode;
+  String? phase;
+  String? hostReference;
 
   factory IyzicoPayment.fromJson(Map<String, dynamic> json) => IyzicoPayment(
     status: json["status"] == null ? null : json["status"],
@@ -109,7 +109,7 @@ class IyzicoPayment {
     "lastFourDigits": lastFourDigits == null ? null : lastFourDigits,
     "basketId": basketId == null ? null : basketId,
     "currency": currency == null ? null : currency,
-    "itemTransactions": itemTransactions == null ? null : List<dynamic>.from(itemTransactions.map((x) => x.toJson())),
+    "itemTransactions": itemTransactions == null ? null : List<dynamic>.from(itemTransactions!.map((x) => x.toJson())),
     "authCode": authCode == null ? null : authCode,
     "phase": phase == null ? null : phase,
     "hostReference": hostReference == null ? null : hostReference,
@@ -138,24 +138,24 @@ class ItemTransaction {
     this.convertedPayout,
   });
 
-  String itemId;
-  String paymentTransactionId;
-  int transactionStatus;
-  double price;
-  double paidPrice;
-  int merchantCommissionRate;
-  double merchantCommissionRateAmount;
-  double iyziCommissionRateAmount;
-  double iyziCommissionFee;
-  int blockageRate;
-  int blockageRateAmountMerchant;
-  int blockageRateAmountSubMerchant;
-  DateTime blockageResolvedDate;
-  int subMerchantPrice;
-  int subMerchantPayoutRate;
-  int subMerchantPayoutAmount;
-  double merchantPayoutAmount;
-  ConvertedPayout convertedPayout;
+  String? itemId;
+  String? paymentTransactionId;
+  int? transactionStatus;
+  double? price;
+  double? paidPrice;
+  int? merchantCommissionRate;
+  double? merchantCommissionRateAmount;
+  double? iyziCommissionRateAmount;
+  double? iyziCommissionFee;
+  int? blockageRate;
+  int? blockageRateAmountMerchant;
+  int? blockageRateAmountSubMerchant;
+  DateTime? blockageResolvedDate;
+  int? subMerchantPrice;
+  int? subMerchantPayoutRate;
+  int? subMerchantPayoutAmount;
+  double? merchantPayoutAmount;
+  ConvertedPayout? convertedPayout;
 
   factory ItemTransaction.fromJson(Map<String, dynamic> json) => ItemTransaction(
     itemId: json["itemId"] == null ? null : json["itemId"],
@@ -191,12 +191,12 @@ class ItemTransaction {
     "blockageRate": blockageRate == null ? null : blockageRate,
     "blockageRateAmountMerchant": blockageRateAmountMerchant == null ? null : blockageRateAmountMerchant,
     "blockageRateAmountSubMerchant": blockageRateAmountSubMerchant == null ? null : blockageRateAmountSubMerchant,
-    "blockageResolvedDate": blockageResolvedDate == null ? null : blockageResolvedDate.toIso8601String(),
+    "blockageResolvedDate": blockageResolvedDate == null ? null : blockageResolvedDate!.toIso8601String(),
     "subMerchantPrice": subMerchantPrice == null ? null : subMerchantPrice,
     "subMerchantPayoutRate": subMerchantPayoutRate == null ? null : subMerchantPayoutRate,
     "subMerchantPayoutAmount": subMerchantPayoutAmount == null ? null : subMerchantPayoutAmount,
     "merchantPayoutAmount": merchantPayoutAmount == null ? null : merchantPayoutAmount,
-    "convertedPayout": convertedPayout == null ? null : convertedPayout.toJson(),
+    "convertedPayout": convertedPayout == null ? null : convertedPayout!.toJson(),
   };
 }
 
@@ -214,16 +214,16 @@ class ConvertedPayout {
     this.currency,
   });
 
-  double paidPrice;
-  double iyziCommissionRateAmount;
-  double iyziCommissionFee;
-  int blockageRateAmountMerchant;
-  int blockageRateAmountSubMerchant;
-  int subMerchantPayoutAmount;
-  double merchantPayoutAmount;
-  int iyziConversionRate;
-  int iyziConversionRateAmount;
-  String currency;
+  double? paidPrice;
+  double? iyziCommissionRateAmount;
+  double? iyziCommissionFee;
+  int? blockageRateAmountMerchant;
+  int? blockageRateAmountSubMerchant;
+  int? subMerchantPayoutAmount;
+  double? merchantPayoutAmount;
+  int? iyziConversionRate;
+  int? iyziConversionRateAmount;
+  String? currency;
 
   factory ConvertedPayout.fromJson(Map<String, dynamic> json) => ConvertedPayout(
     paidPrice: json["paidPrice"] == null ? null : json["paidPrice"].toDouble(),

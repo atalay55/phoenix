@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
 
 
 void main()async {
 
 
-  runApp(const MyApp());
+  FlutterNativeSplash.removeAfter(initialization);
+  runApp(MyApp());
 }
 
 Future initialization(BuildContext context)async{
-  await Future.delayed(Duration(seconds: 3));
+  await Future.delayed(Duration(seconds: 2));
 }
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
+
 
 
 
@@ -25,13 +27,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Login Page'),
+      home:  MyHomePage(title: 'Login Page', key: Key("key"),),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key key,  this.title}) : super(key: key);
+  const MyHomePage({required Key key,  required this.title}) : super(key: key);
 
   final String title;
 

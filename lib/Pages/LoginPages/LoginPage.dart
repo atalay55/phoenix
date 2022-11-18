@@ -20,9 +20,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Person _person;
+  Person? _person;
 
-  Future<Person> getPerson( userName,pass)async{
+  Future<Person?> getPerson( userName,pass)async{
     List<Person> users = await PersonDao().getAll();
     for(Person p in users){
       if(p.userName==userName&& p.password==pass){
@@ -41,8 +41,8 @@ class _LoginPageState extends State<LoginPage> {
   }
   Future<String> getUserName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String stringValue = prefs.getString('userName');
-    return stringValue;
+    String? stringValue = prefs.getString('userName');
+    return stringValue!;
   }
 
   @override
@@ -107,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (value) {
 
-                           return LoginValidator().checkUserName(value);
+                           return LoginValidator().checkUserName(value!);
 
                           }
                         ),
@@ -145,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (value) {
 
-                            return LoginValidator().checkPass(value);
+                            return LoginValidator().checkPass(value!);
                           },
                         ),
                       ),
@@ -190,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                                     backgroundColor: Colors.green),
                                 child: Text("login"),
                                 onPressed: () {
-                                  bool isTrue=_formKey.currentState.validate();
+                                  bool isTrue=_formKey.currentState!.validate();
                                   setState(() {
 
 
@@ -294,13 +294,13 @@ login(String userName,String pass,bool isTrue)async{
 
      if(msg.isCorrect){
        await  getPerson(_userNameCont.text.toString(),_passCont.text.toString()).then((value) {
-         PersonDao().updateIsRemember(value.id,rememberMe.toString());
+         PersonDao().updateIsRemember(value!.id!.toInt(),rememberMe.toString());
          setUserName(_userNameCont.text);
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage(value)), (route) => false);
         });
       }
     if(isTrue){
-        return LoginValidator().msg.message.toString();
+        return ;
       }else{
 
         if(userName.isNotEmpty || pass.isNotEmpty)

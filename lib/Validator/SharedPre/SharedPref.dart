@@ -5,7 +5,7 @@ class SharedPref{
   SharedPref(){ initialize();
   remeberMe(false);
   }
-  SharedPreferences _prefs;
+  SharedPreferences? _prefs;
 
   initialize() async {
     if (_prefs != null) {
@@ -15,17 +15,17 @@ class SharedPref{
     }
   }
 
-  Future<void> saveMail(String userName) async {
-    return await _prefs.setString('mail', userName);
+  Future<bool> saveMail(String userName) async {
+    return await _prefs!.setString('mail', userName);
   }
-   Future<void> sharedClear() async {
-    return _prefs.clear();
+   Future<Future<bool>> sharedClear() async {
+    return _prefs!.clear();
   }
-   Future<void> remeberMe(bool beniHatirla) async {
-    return  await _prefs.setBool('rememberMe', beniHatirla ?? false);
+   Future<bool> remeberMe(bool beniHatirla) async {
+    return  await _prefs!.setBool('rememberMe', beniHatirla ?? false);
   }
-  Future<bool> getRememberMe() async {
-    bool boolValue = _prefs.getBool('rememberMe');
+  Future<bool?> getRememberMe() async {
+    bool? boolValue = _prefs!.getBool('rememberMe');
     return boolValue;
   }
 }

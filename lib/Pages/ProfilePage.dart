@@ -20,8 +20,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool changeUserNameAndPhone = false;
-  Person loginPersson;
-  File _image;
+  Person? loginPersson;
+  File? _image;
 
   @override
   void initState() {
@@ -87,14 +87,14 @@ class _ProfilePageState extends State<ProfilePage> {
                         Padding(
                           padding: EdgeInsets.only(top: 13, left: 13),
                           child: Text(
-                            loginPersson.name + " " + loginPersson.surName,
+                            loginPersson!.name.toString()  + " " + loginPersson!.surName.toString(),
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 18),
                           ),
                         ),
                         Padding(
                             padding: EdgeInsets.only(top: 15),
-                            child: Text(loginPersson.date ?? "18.05.2022")),
+                            child: Text(loginPersson!.date ?? "18.05.2022")),
                       ]),
                       Spacer(),
                       Padding(
@@ -117,21 +117,21 @@ class _ProfilePageState extends State<ProfilePage> {
         enabled: changeUserNameAndPhone,
         decoration: InputDecoration(
             icon: const Icon(Icons.person),
-            hintText: loginPersson.userName ?? "Error"),
+            hintText: loginPersson!.userName ?? "Error"),
         onChanged: (value) {
           if (RegisterValidator().checkUserName(value)) {
             widget._person.userName = value;
-            PersonDao().updatePersonUserName(widget._person.id, value);
+            PersonDao().updatePersonUserName(widget._person.id!.toInt(), value);
           }
         },
       ),
       TextField(
         enabled: changeUserNameAndPhone,
         decoration: InputDecoration(
-            icon: const Icon(Icons.phone), hintText: loginPersson.phoneNum),
+            icon: const Icon(Icons.phone), hintText: loginPersson!.phoneNum),
         onChanged: (value) {
           widget._person.phoneNum = value;
-          PersonDao().updatePersonPhone(widget._person.id, value);
+          PersonDao().updatePersonPhone(widget._person.id!.toInt(), value);
         },
       ),
       ListTile(

@@ -8,7 +8,7 @@ import 'package:phoenix/Pages/campaignPage.dart';
 import 'package:phoenix/Theme/PopMenu.dart';
 
 class HomePage extends StatefulWidget {
-   Person _person;
+   Person? _person;
 
   HomePage(this._person);
 
@@ -22,7 +22,7 @@ class _MainPageState extends State<HomePage> {
   int item = 0;
   bool isSearch = false;
   bool showSearchBar = true;
-  String search;
+  String? search;
   var title = "Anka";
   var poplist=["exit"];
 
@@ -33,11 +33,11 @@ class _MainPageState extends State<HomePage> {
     var pageWidth = page.width;
     var pageHight = page.height;
     List<Widget> pageList = [
-      GridViewPage(isSearch, search,widget._person),
-      ProfilePage(widget._person),
+      GridViewPage(isSearch, search.toString(),widget._person!),
+      ProfilePage(widget._person!),
       campaignPage(),
       ProductAddPage(),
-      CardPage(widget._person.id.toString())
+      CardPage(widget._person!.id.toString())
     ];
     return Scaffold(
 
@@ -87,7 +87,7 @@ class _MainPageState extends State<HomePage> {
                           },
                           icon:const  Icon(Icons.search)),
                     IconButton(onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CardPage(widget._person.id.toString())));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CardPage(widget._person!.id.toString())));
                       }, icon: Icon(Icons.shopping_bag)),
                 ])
           : AppBar(
@@ -121,7 +121,7 @@ class _MainPageState extends State<HomePage> {
                         ),
                         fit: BoxFit.fill,
                       ),
-                    ),
+                    ), accountEmail: null,
 
                   ),
                   ListTile(

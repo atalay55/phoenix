@@ -7,8 +7,8 @@ import 'package:phoenix/Theme/PaymetPage.dart';
 
 
 class CardPage extends StatefulWidget {
-  String cardId;
-  String personId;
+  String? cardId;
+  String? personId;
   CardPage(this.personId);
 
   CardPage.empty();
@@ -25,7 +25,7 @@ class _CardPageState extends State<CardPage> {
   List<int> pro=[];
   var total;
 
-  Future<void> convertproductList(personId) async {
+  Future<List<Product>> convertproductList(personId) async {
        List<Product> _comingProducts;
       List<int> productListInt= await parseProductList(personId);
       _productss.clear();
@@ -35,27 +35,32 @@ class _CardPageState extends State<CardPage> {
       }
       total = _productss
           .map((item) => item.price)
-          .reduce((value, current) => value + current);
+          .reduce((value, current) => value! + current!);
       return _productss;
 
   }
-  Future<void> deleteProduct(int productId){
+  Future<void> deleteProduct(int productId) async {
 
+    String? str;
     pro.remove(productId);
-    String str=pro.map((e) => e.toString()).join(",");
-    if(str.isEmpty){
+
+    if(str==null){
       str =null;
+    }else{
+      str=pro.map((e) => e.toString()).join(",");
     }
-    PersonDao().deleteProductToProductList(int.parse(widget.personId),str);
+
+
+    PersonDao().deleteProductToProductList(int.parse(widget.personId.toString()),str);
 
   }
 
   Future<List<int>> parseProductList(id) async {
-    String as;
+    String? as;
     pro.clear();
     var pr = await PersonDao().getProducts(id);
-    as= pr.first;
-    var bs = as.split(",");
+    as= pr?.first;
+    var bs = as!.split(",");
     for(var i in bs){
       if(i.contains("[")){
         i=i[1];
@@ -76,7 +81,7 @@ class _CardPageState extends State<CardPage> {
       return Scaffold(
          appBar: AppBar(title: Text("CardPage"),backgroundColor: Colors.indigoAccent),
           body: FutureBuilder<dynamic>(
-            future: convertproductList(int.parse(widget.personId)),
+            future: convertproductList(int.parse(widget.personId.toString())),
             builder: (context, snapchat) {
               if (snapchat.hasData) {
                List<Product> _products = snapchat.data;
@@ -103,11 +108,11 @@ class _CardPageState extends State<CardPage> {
                                         .imagePath ?? "Images/deneme1",),
                                   ),
                                   //Image.asset(_products[item].imagePath),
-                                  title: Text(_products[item].productName),
+                                  title: Text(_products[item].productName.toString()),
                                   trailing: GestureDetector(onTap:(){
                                     setState(() {
 
-                                      deleteProduct(_products[item].id);
+                                      deleteProduct(_products[item].id!.toInt());
                                     });
 
                                     },child: Icon(Icons.cancel)),

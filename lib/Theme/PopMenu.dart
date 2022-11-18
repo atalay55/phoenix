@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phoenix/Pages/LoginPages/LoginPage.dart';
 
 class PopMenu extends StatelessWidget {
-   List<String> poplist ;
+   List<String>? poplist ;
 
   PopMenu( {this.poplist});
 

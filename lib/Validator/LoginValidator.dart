@@ -6,7 +6,7 @@ import 'package:phoenix/Entity/Person.dart';
 class LoginValidator{
   Message msg=Message();
   List<Person> users=[];
-  Person person;
+  Person? person;
 
 
   Future<Message> findPerson(String userName,String pass)async {
