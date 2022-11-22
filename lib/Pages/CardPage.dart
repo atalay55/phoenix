@@ -41,13 +41,11 @@ class _CardPageState extends State<CardPage> {
   }
   Future<void> deleteProduct(int productId) async {
 
-    String? str;
     pro.remove(productId);
+    String? str=pro.map((e) => e.toString()).join(",");
 
-    if(str==null){
+    if(str[0]==","){
       str =null;
-    }else{
-      str=pro.map((e) => e.toString()).join(",");
     }
 
 
@@ -134,7 +132,7 @@ class _CardPageState extends State<CardPage> {
                               child: SizedBox(width: width/1.5,height: heigth/15,child: ElevatedButton(onPressed: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=> PaymetPage()));
 
-                              }, child: Text("Satın al"))),
+                              }, child: Text(" Buy ",style: TextStyle(fontSize: 18)),)),
                             ),
                             Padding(
                               padding:  EdgeInsets.only( left: 10.0),

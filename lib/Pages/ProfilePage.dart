@@ -135,7 +135,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
       ),
       ListTile(
-        title: const Text("canli destek"),
+        title: const Text("live support"),
         leading: const Icon(Icons.support_agent),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
@@ -146,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
       ),
       ListTile(
-        title: const Text("Adreslerim"),
+        title: const Text("Address"),
         leading: const Icon(Icons.location_city),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
@@ -157,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
       ),
       ListTile(
-        title: const Text("Favorilerim"),
+        title: const Text("favorites"),
         leading: const Icon(Icons.favorite),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
@@ -168,7 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
       ),
       ListTile(
-        title: const Text("Geçmis Siparislerim"),
+        title: const Text("Past orders"),
         leading: const Icon(Icons.shopping_basket),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
@@ -179,7 +179,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
       ),
       ListTile(
-        title: const Text("Giris Ayarlari"),
+        title: const Text("Login Settings"),
         leading: const Icon(Icons.key),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
@@ -190,7 +190,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
       ),
       ListTile(
-        title: const Text("Yardım"),
+        title: const Text("Help"),
         leading: const Icon(Icons.help),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {
@@ -201,7 +201,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
       ),
       ListTile(
-        title: const Text("Çıkıs Yap"),
+        title: const Text("Exit"),
         leading: const Icon(Icons.exit_to_app),
         trailing: const Icon(Icons.arrow_right),
         onTap: () {

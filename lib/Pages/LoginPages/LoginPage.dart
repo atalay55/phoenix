@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text("Beni hatırla"),
+                            Text("Remember me"),
                             Switch(
                               value: rememberMe,
                               onChanged: (value) {
@@ -232,7 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                               });
                             },
                             child: Text(
-                              "Uye ol",
+                              "Sign up",
                               style: TextStyle(color: Colors.red),
                             )),
                       ),
@@ -260,7 +260,7 @@ class _LoginPageState extends State<LoginPage> {
                               });
                             },
                             child: Text(
-                              "e-Devlet ile Giris",
+                              "e-Devlet",
                               style: TextStyle(color: Colors.white),
                             )),
                       ),
@@ -273,7 +273,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    child: Text("Parolamı unuttum"),
+                    child: Text("forgot password "),
                     onTap: () {
 
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPassPage()));

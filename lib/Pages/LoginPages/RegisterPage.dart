@@ -58,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         textCapitalization:
                                             TextCapitalization.words,
                                         textInputAction: TextInputAction.next,
-                                        decoration: borderStyle("İsim"),
+                                        decoration: borderStyle("Name"),
                                         validator: (value) {
                                           return RegisterValidator()
                                               .checkName(value!);
@@ -77,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       textCapitalization:
                                           TextCapitalization.words,
                                       textInputAction: TextInputAction.next,
-                                      decoration: borderStyle("Soyisim"),
+                                      decoration: borderStyle("SurName"),
                                       validator: (value) {
                                         return RegisterValidator()
                                             .checksurName(value!);
@@ -137,7 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       });
                                     },
                                   ),
-                                  label: Text("Date of birth",
+                                  label: Text("Date Of Birth",
                                       style: TextStyle(color: Colors.black54)),
                                 ),
                                 validator: (value) {
@@ -173,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 keyboardType: TextInputType.text,
                                 textCapitalization: TextCapitalization.words,
                                 textInputAction: TextInputAction.next,
-                                decoration: borderStyle("Parola"),
+                                decoration: borderStyle("Password"),
                                 validator: (value) {
                                   return RegisterValidator()
                                       .checkPass(value.toString());
@@ -201,7 +201,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                                   },
                                   child: Text(
-                                    "Uye Gizlilik Politakası",
+                                    "User Privacy Policy",
                                     style: TextStyle(color: Colors.green),
                                   ),
                                 ),
@@ -255,7 +255,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                     PersonDao()
                                                         .addPerson(person);
                                                     snackbar(context,
-                                                        "Kayit Basarili");
+                                                        "Registration Successful");
                                                     Navigator.pushAndRemoveUntil(
                                                         context,
                                                         MaterialPageRoute(
@@ -264,12 +264,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                                         (route) => false);
                                                   } else {
                                                     snackbar(context,
-                                                        "kullanici mevcut");
+                                                        "user available");
                                                   }
                                                 });
                                               } else {
                                                 snackbar(context,
-                                                    "please check üye gizlilik politikası");
+                                                    "please check User Privacy Policy");
                                               }
                                             }
                                           });
@@ -305,7 +305,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       _isAgree = false;
                     });
                   },
-                  child: Text("Simdi degil")),
+                  child: Text("Exit")),
               TextButton(
                   onPressed: () {
                     setState(() {
@@ -313,7 +313,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       Navigator.pop(context);
                     });
                   },
-                  child: Text("Kabul et")),
+                  child: Text("Accept")),
             ],
           );
         });

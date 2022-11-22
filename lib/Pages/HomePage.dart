@@ -23,7 +23,7 @@ class _MainPageState extends State<HomePage> {
   bool isSearch = false;
   bool showSearchBar = true;
   String? search;
-  var title = "Anka";
+  var title = "Phoneix";
   var poplist=["exit"];
 
 
@@ -110,7 +110,8 @@ class _MainPageState extends State<HomePage> {
                   UserAccountsDrawerHeader(
                     accountName: Text("Phoneix"),
                     currentAccountPicture: CircleAvatar(
-                      backgroundImage: AssetImage("Images/deneme1.png")
+                      backgroundImage: AssetImage("Images/deneme1.png"),
+                      backgroundColor: Colors.white,
                     ),
                     decoration: BoxDecoration(
                       image: DecorationImage(
@@ -125,12 +126,12 @@ class _MainPageState extends State<HomePage> {
 
                   ),
                   ListTile(
-                    title: Text("Anasayfa"),
+                    title: Text("HomePage"),
                     selectedColor: Colors.blueAccent,
                     onTap: () {
                       setState(() {
                         showSearchBar = true;
-                        title = "Anka";
+                        title = "Phoneix";
                         item = 0;
                       });
                       Navigator.pop(context);

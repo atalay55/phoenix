@@ -28,7 +28,7 @@ class _UrunPageState extends State<UrunPage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.indigoAccent,
-          title: const Text("Urün Page"),
+          title: const Text("Product Page"),
         ),
         body: Center(
           child: Column(
@@ -100,11 +100,11 @@ class _UrunPageState extends State<UrunPage> {
                       child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              //PersonDao().deleteAllProductToProductList(widget.person!.id!.toInt());
+
                              PersonDao().addProductToProductList(widget.person!.id!.toInt(),widget.product!.id.toString());
                             });
                           },
-                          child: Text("Sepete Ekle ")),
+                          child: Text(" Add cart ")),
                     ),
                   ],
                 ),
